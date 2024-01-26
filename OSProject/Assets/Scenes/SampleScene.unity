@@ -735,7 +735,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6739165986530188326, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1659538567}
   m_SourcePrefab: {fileID: 100100000, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
 --- !u!1001 &1386942039
 PrefabInstance:
@@ -802,6 +805,30 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed18ece27b118f24d87558ee5d0eb479, type: 3}
+--- !u!1 &1659538564 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6739165986530188326, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+  m_PrefabInstance: {fileID: 1146080522}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1659538567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659538564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c7c2d8bad6c574b9f38e01925a3086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraSpeedVert: 1
+  cameraSpeedHoriz: 1
+  cameraZoom: 5
+  cameraBoundsVert: 235
+  cameraBoundsHoriz: 215
+  cameraBoundsZoomIn: 50
+  cameraBoundsZoomOut: 400
 --- !u!1001 &1748412870
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -29,9 +29,13 @@ public class placeWall : MonoBehaviour
         transform.position = correctedWorldPosition;
         if (Input.GetMouseButtonUp(0))
         {
+            wall.transform.position = correctedWorldPosition;
             Instantiate(wall);
-            wall.transform.position = correctedWorldPosition; 
-            Debug.Log(wall.transform.position);
+        }
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+            wall.transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
         }
     }
 
