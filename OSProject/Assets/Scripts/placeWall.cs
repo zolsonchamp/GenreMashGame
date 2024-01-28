@@ -13,7 +13,7 @@ public class placeWall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+    
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class placeWall : MonoBehaviour
         {
             worldPosition= hitData.point;
         }
-        correctedWorldPosition = new Vector3(worldPosition.x, 5, worldPosition.z);
+        correctedWorldPosition = new Vector3(worldPosition.x, 0, worldPosition.z);
         transform.position = correctedWorldPosition;
         if (Input.GetMouseButtonUp(0))
         {
@@ -34,8 +34,13 @@ public class placeWall : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.R))
         {
-            transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
-            wall.transform.Rotate(0.0f, 90.0f, 0.0f, Space.World);
+            transform.Rotate(0.0f, 15.0f, 0.0f, Space.World);
+            wall.transform.Rotate(0.0f, 15.0f, 0.0f, Space.World);
+        }
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            transform.Rotate(0.0f, -15.0f, 0.0f, Space.World);
+            wall.transform.Rotate(0.0f, -15.0f, 0.0f, Space.World);
         }
     }
 
