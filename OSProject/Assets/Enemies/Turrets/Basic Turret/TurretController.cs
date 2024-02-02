@@ -25,7 +25,7 @@ public class TurretController : MonoBehaviour
     public Transform target;
     float targetDis;
     public float attackRange;
-    
+ 
 
     void Start()
     {
@@ -34,6 +34,8 @@ public class TurretController : MonoBehaviour
 
     void Update()
     {
+        GameObject targetObject = GameObject.FindGameObjectWithTag("Target");
+        target=targetObject.transform;
         CheckTargetDistance();
     }
 

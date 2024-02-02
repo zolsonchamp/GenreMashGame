@@ -6,7 +6,11 @@ using UnityEngine.UIElements;
 
 public class placeWall : MonoBehaviour
 {
+    public GameObject[] util;
+    public GameObject selectedUtil;
     public GameObject wall;
+    public GameObject snake;
+    public GameObject turret;
     public Vector3 screenPosition;
     public Vector3 worldPosition;
     public Vector3 correctedWorldPosition;
@@ -16,7 +20,7 @@ public class placeWall : MonoBehaviour
     {
         //sets wall placement rotation at start
         transform.localRotation = Quaternion.Euler(0, 0, 0);
-        wall.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        selectedUtil.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
 
     // Update is called once per frame
@@ -28,27 +32,50 @@ public class placeWall : MonoBehaviour
         if(Physics.Raycast(ray, out RaycastHit hitData, 500, layersToHit))
         {
             worldPosition= hitData.point;
+            
         }
-        //corrects height of mouse to world position and moves wall object to mouse
-        correctedWorldPosition = new Vector3(worldPosition.x, 0, worldPosition.z);
-        transform.position = correctedWorldPosition;
+        transform.position= worldPosition;
+        selectedUtil.transform.position = worldPosition;
+        //object selection
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            selectedUtil= util[0];
+            wall.SetActive(true);
+            snake.SetActive(false);
+            turret.SetActive(false);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+        {
+            selectedUtil = util[1];
+            wall.SetActive(false);
+            snake.SetActive(true);
+            turret.SetActive(false);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+        {
+            selectedUtil = util[2];
+            wall.SetActive(false);
+            snake.SetActive(false);
+            turret.SetActive(true);
+        }
         //on left click place a wall
         if (Input.GetMouseButtonUp(0))
         {
-            wall.transform.position = correctedWorldPosition;
-            Instantiate(wall);
+            selectedUtil.transform.position = worldPosition;
+            Instantiate(selectedUtil);
+            
         }
         //rotate wall clockwise
         if (Input.GetKeyUp(KeyCode.R))
         {
             transform.Rotate(0.0f, 15.0f, 0.0f, Space.World);
-            wall.transform.Rotate(0.0f, 15.0f, 0.0f, Space.World);
+            selectedUtil.transform.Rotate(0.0f, 15.0f, 0.0f, Space.World);
         }
         //rotate wall counterclockwise
         if (Input.GetKeyUp(KeyCode.Q))
         {
             transform.Rotate(0.0f, -15.0f, 0.0f, Space.World);
-            wall.transform.Rotate(0.0f, -15.0f, 0.0f, Space.World);
+            selectedUtil.transform.Rotate(0.0f, -15.0f, 0.0f, Space.World);
         }
     }
 
