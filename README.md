@@ -1,2 +1,3 @@
 # GenreMashGame
-jacob okoshi
+Jacob Okoshi
+Zack Olson
