@@ -35,7 +35,7 @@ public class TurretController : MonoBehaviour
     void Update()
     {
         GameObject targetObject = GameObject.FindGameObjectWithTag("Target");
-        target=targetObject.transform;
+        target = targetObject.transform;
         CheckTargetDistance();
     }
 
