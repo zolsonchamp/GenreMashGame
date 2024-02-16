@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,9 +12,12 @@ public class PlayerController : MonoBehaviour
     public float sprintSpeed;
     public float groundDrag;
     public float jumpHeight;
+    public float gravity;
     public float mouseSensitivity;
     public float shootDelay;
     public float gunDamage;
+    private Vector3 jumpMomentum;
+    private float jumpSpeed;
 
     KeyCode sprintKey;
     KeyCode jumpKey;
@@ -39,6 +43,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private Camera playerCam;
+
 
 
     private void Awake()
@@ -74,20 +79,30 @@ public class PlayerController : MonoBehaviour
 
     void HandleMovement()
     {
-
-        // Handle player movement
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-
-        float moveSpeed = (Input.GetKey(sprintKey) ? sprintSpeed : walkSpeed);
-
         Vector3 moveDirection = (transform.forward * vertical + transform.right * horizontal).normalized;
-        rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
-
+        float moveSpeed = (Input.GetKey(sprintKey) ? sprintSpeed : walkSpeed);
+        // Handle player movement
+        if (isGrounded)
+        {
+            rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
+            jumpMomentum = moveDirection;
+        }
+        else
+        {
+            rb.velocity = new Vector3((jumpMomentum.x+(moveDirection.x)/2) * jumpSpeed, rb.velocity.y, (jumpMomentum.z+(moveDirection.z/2)) * jumpSpeed);
+        }
+        
         //Jump
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
+            jumpSpeed = moveSpeed;
             rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+        }
+        if (!isGrounded)
+        {
+            rb.AddForce(Vector3.down * gravity, ForceMode.Force);
         }
 
         //Animation
