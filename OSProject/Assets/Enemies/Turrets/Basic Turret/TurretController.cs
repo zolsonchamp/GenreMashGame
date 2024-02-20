@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
-public class TurretController : MonoBehaviour
+public class TurretController : MonoBehaviour, Damagable
 {
 
     //Prefabs and tranforms
@@ -16,9 +16,11 @@ public class TurretController : MonoBehaviour
     float lastShootTime;
     public float shootDelay;
     public float bulletSpeed = 100f;
+    public float bulletDamage;
     [SerializeField] private Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
 
     //Self Info
+    public float maxHealth;
     public float currentHealth;
 
     //Targeting
@@ -30,6 +32,7 @@ public class TurretController : MonoBehaviour
     void Start()
     {
         //Get Player as target
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -60,7 +63,10 @@ public class TurretController : MonoBehaviour
 
             if (Physics.Raycast(bulletSpawn.position, direction, out RaycastHit hit, float.MaxValue))
             {
-                //Add damage
+                if (hit.collider.tag != tag)
+                {
+                    hit.collider.gameObject.transform.parent.GetComponent<Damagable>()?.TakeDamage(bulletDamage);
+                }
 
                 TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
 
@@ -117,4 +123,20 @@ public class TurretController : MonoBehaviour
 
         Destroy(trail.gameObject, trail.time);
     }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+            return;
+        }
+    }
+
+    private void Die()
+    {
+
+    }
+
 }

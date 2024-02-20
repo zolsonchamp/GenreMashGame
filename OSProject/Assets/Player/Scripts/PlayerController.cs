@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, Damagable
 {
     [Header("Stats")]
     public float maxHealth;
@@ -39,7 +40,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject bulletTracer;
     public float bulletSpeed = 100f;
     [SerializeField] private Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
+
+
     public float currentHealth;
+    [SerializeField] Image healthFill;
 
     [SerializeField]
     private Camera playerCam;
@@ -196,7 +200,8 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateHealthUI(float newHealth)
     {
-
+        float fillAmount = newHealth / maxHealth;
+        healthFill.fillAmount = fillAmount;
     }
 
     public void TakeDamage(float damage)
