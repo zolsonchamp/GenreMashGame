@@ -12,6 +12,8 @@ public class placeWall : MonoBehaviour
     public GameObject snake;
     public GameObject turret;
     public GameObject mud;
+    public GameObject acid;
+    public GameObject mine;
     public Vector3 screenPosition;
     public Vector3 worldPosition;
     public Vector3 correctedWorldPosition;
@@ -45,6 +47,8 @@ public class placeWall : MonoBehaviour
             snake.SetActive(false);
             turret.SetActive(false);
             mud.SetActive(false);
+            acid.SetActive(false);
+            mine.SetActive(false);
         }
         if (Input.GetKeyUp(KeyCode.Alpha2))
         {
@@ -53,6 +57,8 @@ public class placeWall : MonoBehaviour
             snake.SetActive(true);
             turret.SetActive(false);
             mud.SetActive(false);
+            acid.SetActive(false);
+            mine.SetActive(false);
         }
         if (Input.GetKeyUp(KeyCode.Alpha3))
         {
@@ -61,6 +67,8 @@ public class placeWall : MonoBehaviour
             snake.SetActive(false);
             turret.SetActive(true);
             mud.SetActive(false);
+            acid.SetActive(false);
+            mine.SetActive(false);
         }
         if (Input.GetKeyUp(KeyCode.Alpha4))
         {
@@ -69,6 +77,28 @@ public class placeWall : MonoBehaviour
             snake.SetActive(false);
             turret.SetActive(false);
             mud.SetActive(true);
+            acid.SetActive(false);
+            mine.SetActive(false);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha5))
+        {
+            selectedUtil = util[4];
+            wall.SetActive(false);
+            snake.SetActive(false);
+            turret.SetActive(false);
+            mud.SetActive(false);
+            acid.SetActive(true);
+            mine.SetActive(false);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha6))
+        {
+            selectedUtil = util[5];
+            wall.SetActive(false);
+            snake.SetActive(false);
+            turret.SetActive(false);
+            mud.SetActive(false);
+            acid.SetActive(false);
+            mine.SetActive(true);
         }
         //on left click place a wall
         if (Input.GetMouseButtonUp(0))

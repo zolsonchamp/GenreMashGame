@@ -32,9 +32,11 @@ public class PlayerController : MonoBehaviour, Damagable
     float rotationX = 0;
     public bool isGrounded;
     public bool isMud;
+    public bool isAcid;
     public LayerMask ground;
     public LayerMask mud;
-
+    public LayerMask acid;
+    
     [SerializeField]
     Transform bulletSpawn;
     float lastShootTime;
@@ -71,6 +73,9 @@ public class PlayerController : MonoBehaviour, Damagable
 
         GroundCheck();
         MudCheck();
+        AcidCheck();
+        if (isAcid)
+            gameObject.GetComponent<Damagable>()?.TakeDamage(.01f);
         HandleLook();
         HandleMovement();
         Shoot();
@@ -92,6 +97,20 @@ public class PlayerController : MonoBehaviour, Damagable
         }
         else
             isMud = false;
+    }
+    void AcidCheck()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 0.5f, acid))
+        {
+            isGrounded = true;
+        }
+        if (Physics.Raycast(transform.position, Vector3.down, 100f, acid))
+        {
+            isAcid = true;
+        }
+        else
+            isAcid = false;
+        
     }
 
     void HandleMovement()
