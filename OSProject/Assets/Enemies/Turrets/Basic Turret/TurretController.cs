@@ -63,11 +63,11 @@ public class TurretController : MonoBehaviour, Damagable
 
             if (Physics.Raycast(bulletSpawn.position, direction, out RaycastHit hit, float.MaxValue))
             {
-                if (hit.collider.tag != tag)
+                if(hit.collider.tag == "Player")
                 {
                     hit.collider.gameObject.transform.parent.GetComponent<Damagable>()?.TakeDamage(bulletDamage);
                 }
-
+                
                 TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
 
                 StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
