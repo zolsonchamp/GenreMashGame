@@ -31,7 +31,9 @@ public class PlayerController : MonoBehaviour, Damagable
 
     float rotationX = 0;
     public bool isGrounded;
+    public bool isMud;
     public LayerMask ground;
+    public LayerMask mud;
 
     [SerializeField]
     Transform bulletSpawn;
@@ -68,6 +70,7 @@ public class PlayerController : MonoBehaviour, Damagable
     {
 
         GroundCheck();
+        MudCheck();
         HandleLook();
         HandleMovement();
         Shoot();
@@ -80,6 +83,16 @@ public class PlayerController : MonoBehaviour, Damagable
         else
             isGrounded = false;
     }
+    void MudCheck()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 0.5f, mud))
+        {
+            isMud = true;
+            isGrounded = true;
+        }
+        else
+            isMud = false;
+    }
 
     void HandleMovement()
     {
@@ -90,19 +103,32 @@ public class PlayerController : MonoBehaviour, Damagable
         // Handle player movement
         if (isGrounded)
         {
+            if(isMud) 
+            rb.velocity = new Vector3(moveDirection.x * moveSpeed/3, rb.velocity.y, moveDirection.z * moveSpeed/3);
+            else
             rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
+
             jumpMomentum = moveDirection;
         }
         else
-        {
+        {   
+            
             rb.velocity = new Vector3((jumpMomentum.x+(moveDirection.x)/2) * jumpSpeed, rb.velocity.y, (jumpMomentum.z+(moveDirection.z/2)) * jumpSpeed);
         }
         
         //Jump
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
-            jumpSpeed = moveSpeed;
-            rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+            if (isMud)
+            {
+                jumpSpeed = moveSpeed / 3;
+                rb.AddForce(Vector3.up * jumpHeight / 2, ForceMode.Impulse);
+            }
+            else
+            {
+                jumpSpeed = moveSpeed;
+                rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+            }
         }
         if (!isGrounded)
         {

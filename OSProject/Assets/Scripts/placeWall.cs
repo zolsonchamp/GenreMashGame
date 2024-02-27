@@ -11,6 +11,7 @@ public class placeWall : MonoBehaviour
     public GameObject wall;
     public GameObject snake;
     public GameObject turret;
+    public GameObject mud;
     public Vector3 screenPosition;
     public Vector3 worldPosition;
     public Vector3 correctedWorldPosition;
@@ -43,6 +44,7 @@ public class placeWall : MonoBehaviour
             wall.SetActive(true);
             snake.SetActive(false);
             turret.SetActive(false);
+            mud.SetActive(false);
         }
         if (Input.GetKeyUp(KeyCode.Alpha2))
         {
@@ -50,6 +52,7 @@ public class placeWall : MonoBehaviour
             wall.SetActive(false);
             snake.SetActive(true);
             turret.SetActive(false);
+            mud.SetActive(false);
         }
         if (Input.GetKeyUp(KeyCode.Alpha3))
         {
@@ -57,6 +60,15 @@ public class placeWall : MonoBehaviour
             wall.SetActive(false);
             snake.SetActive(false);
             turret.SetActive(true);
+            mud.SetActive(false);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+        {
+            selectedUtil = util[3];
+            wall.SetActive(false);
+            snake.SetActive(false);
+            turret.SetActive(false);
+            mud.SetActive(true);
         }
         //on left click place a wall
         if (Input.GetMouseButtonUp(0))
