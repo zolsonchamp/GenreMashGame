@@ -6,7 +6,12 @@ public class objectiveManager : MonoBehaviour, Damagable
 {
     public float maxHealth;
     public float currentHealth;
+    
     // Start is called before the first frame update
+    private void Awake()
+    {
+       
+    }
     void Start()
     {
         
@@ -28,6 +33,7 @@ public class objectiveManager : MonoBehaviour, Damagable
     }
     private void Die()
     {
+        GameManager.Instance.objectiveCount--;
         gameObject.SetActive(false);
     }
 }
