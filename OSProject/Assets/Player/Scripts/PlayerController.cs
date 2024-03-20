@@ -16,13 +16,17 @@ public class PlayerController : MonoBehaviour, Damagable
     public float gravity;
     public float mouseSensitivity;
     public float shootDelay;
+    public float altShootDelay;
     public float gunDamage;
+    public float nadeDamage;
+    public float revolverDamage;
     private Vector3 jumpMomentum;
     private float jumpSpeed;
 
     KeyCode sprintKey;
     KeyCode jumpKey;
     KeyCode shootButton;
+    KeyCode altShootButton;
 
     [Header("Animation")]
     public Animator animator;
@@ -45,6 +49,10 @@ public class PlayerController : MonoBehaviour, Damagable
     public float bulletSpeed = 100f;
     [SerializeField] private Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
 
+    [SerializeField]
+    Transform nadeSpawn;
+    float lastAltShootTime;
+    public float nadeSpeed;
 
     public float currentHealth;
     [SerializeField] Image healthFill;
@@ -52,6 +60,7 @@ public class PlayerController : MonoBehaviour, Damagable
     [SerializeField]
     private Camera playerCam;
 
+    public GameObject nade;
 
 
     private void Awake()
@@ -61,7 +70,7 @@ public class PlayerController : MonoBehaviour, Damagable
         sprintKey = KeyCode.LeftShift;
         jumpKey = KeyCode.Space;
         shootButton = KeyCode.Mouse0;
-
+        altShootButton = KeyCode.Mouse1;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -79,6 +88,7 @@ public class PlayerController : MonoBehaviour, Damagable
         HandleLook();
         HandleMovement();
         Shoot();
+        altShoot();
     }
 
     void GroundCheck()
@@ -203,7 +213,60 @@ public class PlayerController : MonoBehaviour, Damagable
             }
         }
     }
+    public void altShoot()
+    {
+        /*  possible jetpack???
+        if (Input.GetKey(altShootButton) && lastAltShootTime + altShootDelay < Time.time)
+        {
+            Vector3 direction = GetDirection();
+            GameObject projectile=Instantiate(nade);
+            projectile.transform.position = this.transform.position;
+            projectile.GetComponent<Rigidbody>().AddForce(direction,ForceMode.Impulse);
+            lastShootTime = Time.time;
 
+        }
+        */
+        /* grenade
+        if (Input.GetKey(altShootButton) && lastAltShootTime + altShootDelay < Time.time)
+        {
+            
+            Vector3 direction = GetDirection();
+            GameObject projectile = Instantiate(nade);
+            projectile.transform.position = nadeSpawn.position;
+            projectile.GetComponent<Rigidbody>().AddForce(direction*nadeSpeed, ForceMode.Impulse);
+           
+            lastAltShootTime = Time.time;
+
+        }*/
+        if (Input.GetKey(altShootButton) && lastAltShootTime + altShootDelay < Time.time)
+        {
+
+            Vector3 direction = GetAltDirection();
+            //Create shoot effect (muzzle flash)
+
+            if (Physics.Raycast(bulletSpawn.position, direction, out RaycastHit hit, float.MaxValue))
+            {
+                if (hit.collider.tag != tag)
+                {
+                    hit.collider.gameObject.GetComponent<Damagable>()?.TakeDamage(revolverDamage);
+                }
+
+                TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+
+                StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
+
+                lastAltShootTime = Time.time;
+            }
+            else
+            {
+                TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+
+                StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 1000, Vector3.zero, false));
+
+                lastAltShootTime = Time.time;
+            }
+        }
+    }
     private Vector3 GetDirection()
     {
         Vector3 direction = playerCam.transform.forward;
@@ -214,6 +277,15 @@ public class PlayerController : MonoBehaviour, Damagable
             Random.Range(-bulletSpreadVariance.z, bulletSpreadVariance.z)
         );
 
+        direction.Normalize();
+
+        return direction;
+    }
+    private Vector3 GetAltDirection()
+    {
+        Vector3 direction = playerCam.transform.forward;
+
+       
         direction.Normalize();
 
         return direction;

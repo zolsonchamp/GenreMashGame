@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3346341526482240444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4433619737945781388}
+  m_Layer: 0
+  m_Name: NadeSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4433619737945781388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3346341526482240444}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.411, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5326179543316868027}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5163292683941823359
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +456,7 @@ MonoBehaviour:
   gravity: 1.5
   mouseSensitivity: 2
   shootDelay: 0.1
+  altShootDelay: 0
   gunDamage: 5
   animator: {fileID: 2236680187903701441}
   isGrounded: 0
@@ -446,9 +478,12 @@ MonoBehaviour:
   bulletTracer: {fileID: 1260739578697129987, guid: 36b8292f14269914b93d70d446ba5992, type: 3}
   bulletSpeed: 100
   bulletSpreadVariance: {x: 0.1, y: 0.1, z: 0.1}
+  nadeSpawn: {fileID: 0}
+  nadeSpeed: 0
   currentHealth: 100
   healthFill: {fileID: 7816099518184460378}
   playerCam: {fileID: 8964284749171279380}
+  nade: {fileID: 0}
 --- !u!54 &5472682185714202213
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -641,6 +676,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4b0f9d853cb27824fa5943d7ff176056, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8375117177957418020}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4b0f9d853cb27824fa5943d7ff176056, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4433619737945781388}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b0f9d853cb27824fa5943d7ff176056, type: 3}
       insertIndex: -1
