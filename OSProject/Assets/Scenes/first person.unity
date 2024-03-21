@@ -2810,6 +2810,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6243786565180192713, guid: 790e9952bff83cc4999b338034fc5ffb, type: 3}
     - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
+      propertyPath: isMud
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
       propertyPath: gravity
       value: 1.5
       objectReference: {fileID: 0}
@@ -2860,6 +2864,10 @@ PrefabInstance:
     - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
       propertyPath: rifleShootDelay
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
+      propertyPath: teslaShootDelay
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
       propertyPath: revolverShootDelay

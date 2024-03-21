@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class NadeExplosion : MonoBehaviour
 {
-    public GameObject projectile;
+
     public GameObject Explosion;
     // Start is called before the first frame update
     void Start()
