@@ -14,7 +14,11 @@ public class TurretController : MonoBehaviour, Damagable
 
     //Shoot info
     float lastShootTime;
+    public int burstLimit;
+    public int shotCount=0;
     public float shootDelay;
+    public float burstRate;
+    public float burstDelay;
     public float bulletSpeed = 100f;
     public float bulletDamage;
     [SerializeField] private Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
@@ -57,10 +61,10 @@ public class TurretController : MonoBehaviour, Damagable
 
         if (lastShootTime + shootDelay < Time.time)
         {
-
+            shootDelay = burstRate;
             Vector3 direction = GetDirection();
             //Create shoot effect (muzzle flash)
-
+            shotCount++;
             if (Physics.Raycast(bulletSpawn.position, direction, out RaycastHit hit, float.MaxValue))
             {
                 if(hit.collider.tag == "Player")
@@ -73,6 +77,11 @@ public class TurretController : MonoBehaviour, Damagable
                 StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
 
                 lastShootTime = Time.time;
+                if (shotCount >= burstLimit)
+                {
+                    shotCount = 0;
+                    shootDelay = burstDelay;
+                }
             }
             else
             {
@@ -81,6 +90,11 @@ public class TurretController : MonoBehaviour, Damagable
                 StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 100, Vector3.zero, false));
 
                 lastShootTime = Time.time;
+                if (shotCount >= burstLimit)
+                {
+                    shotCount = 0;
+                    shootDelay = burstDelay;
+                }
             }
         }
     }
@@ -136,7 +150,7 @@ public class TurretController : MonoBehaviour, Damagable
 
     private void Die()
     {
-
+        Destroy(gameObject);
     }
 
 }
