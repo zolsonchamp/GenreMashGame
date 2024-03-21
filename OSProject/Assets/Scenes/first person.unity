@@ -2216,6 +2216,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1821765510}
     m_Modifications:
+    - target: {fileID: -442746410451306273, guid: a2fe4332687d61645adf06b37f1c3e8f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 463593755488662319, guid: a2fe4332687d61645adf06b37f1c3e8f, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -2234,7 +2238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3612324110232509551, guid: a2fe4332687d61645adf06b37f1c3e8f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 186.3
       objectReference: {fileID: 0}
     - target: {fileID: 3612324110232509551, guid: a2fe4332687d61645adf06b37f1c3e8f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2242,7 +2246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3612324110232509551, guid: a2fe4332687d61645adf06b37f1c3e8f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -91.17
       objectReference: {fileID: 0}
     - target: {fileID: 3612324110232509551, guid: a2fe4332687d61645adf06b37f1c3e8f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2830,6 +2834,10 @@ PrefabInstance:
       value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
+      propertyPath: nadeDamage
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
       propertyPath: nadeTracer
       value: 
       objectReference: {fileID: 1260739578697129987, guid: 36b8292f14269914b93d70d446ba5992, type: 3}
@@ -2842,8 +2850,20 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
+      propertyPath: nadeShootDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
       propertyPath: revolverDamage
-      value: 100
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
+      propertyPath: rifleShootDelay
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577400039019278716, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
+      propertyPath: revolverShootDelay
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 1653310126941695714, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
       propertyPath: m_FontData.m_MinSize

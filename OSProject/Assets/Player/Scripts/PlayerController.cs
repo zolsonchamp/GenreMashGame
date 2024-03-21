@@ -15,7 +15,9 @@ public class PlayerController : MonoBehaviour, Damagable
     public float jumpHeight;
     public float gravity;
     public float mouseSensitivity;
-    public float shootDelay;
+    public float rifleShootDelay;
+    public float nadeShootDelay;
+    public float revolverShootDelay;
     public float altShootDelay;
     public float gunDamage;
     public float nadeDamage;
@@ -43,7 +45,7 @@ public class PlayerController : MonoBehaviour, Damagable
     
     [SerializeField]
     Transform bulletSpawn;
-    float lastShootTime;
+    float lastRifleShootTime;
     [SerializeField] LayerMask mask;
     [SerializeField] GameObject bulletTracer;
     public float bulletSpeed = 100f;
@@ -51,6 +53,8 @@ public class PlayerController : MonoBehaviour, Damagable
 
     [SerializeField]
     Transform nadeSpawn;
+    float lastNadeShootTime;
+    float lastRevovlerShootTime;
     float lastAltShootTime;
     public float nadeSpeed;
 
@@ -62,6 +66,7 @@ public class PlayerController : MonoBehaviour, Damagable
 
     public GameObject nade;
 
+    int weaponSlot = 0;
 
     private void Awake()
     {
@@ -89,6 +94,19 @@ public class PlayerController : MonoBehaviour, Damagable
         HandleMovement();
         Shoot();
         altShoot();
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            weaponSlot = 0;
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+        {
+            weaponSlot = 1;
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+        {
+            weaponSlot = 2;
+        }
+
     }
 
     void GroundCheck()
@@ -183,33 +201,80 @@ public class PlayerController : MonoBehaviour, Damagable
 
     public void Shoot()
     {
-
-        if (Input.GetKey(shootButton) && lastShootTime + shootDelay < Time.time)
+        if (weaponSlot == 0)
         {
-
-            Vector3 direction = GetDirection();
-            //Create shoot effect (muzzle flash)
-
-            if (Physics.Raycast(bulletSpawn.position, direction, out RaycastHit hit, float.MaxValue))
+            if (Input.GetKey(shootButton) && lastRifleShootTime + rifleShootDelay < Time.time)
             {
-                if (hit.collider.tag != tag)
+
+                Vector3 direction = GetDirection();
+                //Create shoot effect (muzzle flash)
+
+                if (Physics.Raycast(bulletSpawn.position, direction, out RaycastHit hit, float.MaxValue))
                 {
-                    hit.collider.gameObject.GetComponent<Damagable>()?.TakeDamage(gunDamage);
+                    if (hit.collider.tag != tag)
+                    {
+                        hit.collider.gameObject.GetComponent<Damagable>()?.TakeDamage(gunDamage);
+                    }
+
+                    TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+
+                    StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
+
+                    lastRifleShootTime = Time.time;
                 }
+                else
+                {
+                    TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
 
-                TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                    StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 100, Vector3.zero, false));
 
-                StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
-
-                lastShootTime = Time.time;
+                    lastRifleShootTime = Time.time;
+                }
             }
-            else
+        }
+        if(weaponSlot == 1)
+        {
+            if (Input.GetKey(shootButton) && lastNadeShootTime + nadeShootDelay < Time.time)
             {
-                TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
 
-                StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 100, Vector3.zero, false));
+                Vector3 direction = GetAccurateDirection();
+                GameObject projectile = Instantiate(nade);
+                projectile.transform.position = nadeSpawn.position;
+                projectile.GetComponent<Rigidbody>().AddForce(direction * nadeSpeed, ForceMode.Impulse);
 
-                lastShootTime = Time.time;
+                lastNadeShootTime = Time.time;
+
+            }
+        }
+        if (weaponSlot == 2)
+        {
+            if (Input.GetKey(shootButton) && lastRevovlerShootTime + revolverShootDelay < Time.time)
+            {
+
+                Vector3 direction = GetAccurateDirection();
+                //Create shoot effect (muzzle flash)
+
+                if (Physics.Raycast(bulletSpawn.position, direction, out RaycastHit hit, float.MaxValue))
+                {
+                    if (hit.collider.tag != tag)
+                    {
+                        hit.collider.gameObject.GetComponent<Damagable>()?.TakeDamage(revolverDamage);
+                    }
+
+                    TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+
+                    StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
+
+                    lastRevovlerShootTime = Time.time;
+                }
+                else
+                {
+                    TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+
+                    StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 500, Vector3.zero, false));
+
+                    lastRevovlerShootTime = Time.time;
+                }
             }
         }
     }
@@ -222,12 +287,12 @@ public class PlayerController : MonoBehaviour, Damagable
             GameObject projectile=Instantiate(nade);
             projectile.transform.position = this.transform.position;
             projectile.GetComponent<Rigidbody>().AddForce(direction,ForceMode.Impulse);
-            lastShootTime = Time.time;
+            lastRifleShootTime = Time.time;
 
         }
         */
-        /* grenade
-        if (Input.GetKey(altShootButton) && lastAltShootTime + altShootDelay < Time.time)
+         //grenade
+       /* if (Input.GetKey(altShootButton) && lastAltShootTime + altShootDelay < Time.time)
         {
             
             Vector3 direction = GetDirection();
@@ -238,7 +303,7 @@ public class PlayerController : MonoBehaviour, Damagable
             lastAltShootTime = Time.time;
 
         }*/
-        if (Input.GetKey(altShootButton) && lastAltShootTime + altShootDelay < Time.time)
+       /* if (Input.GetKey(altShootButton) && lastAltShootTime + altShootDelay < Time.time)
         {
 
             Vector3 direction = GetAltDirection();
@@ -265,7 +330,7 @@ public class PlayerController : MonoBehaviour, Damagable
 
                 lastAltShootTime = Time.time;
             }
-        }
+        }*/
     }
     private Vector3 GetDirection()
     {
@@ -281,7 +346,7 @@ public class PlayerController : MonoBehaviour, Damagable
 
         return direction;
     }
-    private Vector3 GetAltDirection()
+    private Vector3 GetAccurateDirection()
     {
         Vector3 direction = playerCam.transform.forward;
 

@@ -23,8 +23,7 @@ public class NadeExplosion : MonoBehaviour
         Destroy(gameObject);
         if (collision.gameObject.tag != "Target"&&collision.gameObject.tag!="explosion")
         {
-            Debug.Log("collided with" + collision.gameObject);
-
+           
             GameObject boom = Instantiate(Explosion);
             boom.transform.position = gameObject.transform.position;
 
