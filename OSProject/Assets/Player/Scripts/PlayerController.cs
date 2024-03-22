@@ -64,12 +64,15 @@ public class PlayerController : MonoBehaviour, Damagable
     private IEnumerator reload;
 
     int weaponSlot = 0;
-    bool reloadCancelled = false;
 
     KeyCode sprintKey;
     KeyCode jumpKey;
     KeyCode shootButton;
     KeyCode altShootButton;
+
+    private IEnumerator stim;
+    private IEnumerator countdown;
+    private IEnumerator regen;
 
     public Text ammoIndicator;
 
@@ -111,7 +114,7 @@ public class PlayerController : MonoBehaviour, Damagable
 
     private void Awake()
     {
-       
+        regen = HealthRegen();
         flameCone.SetActive(false);
         rb = GetComponent<Rigidbody>();
 
@@ -127,7 +130,7 @@ public class PlayerController : MonoBehaviour, Damagable
 
     void Update()
     {
-
+        
         GroundCheck();
         MudCheck();
         AcidCheck();
@@ -178,7 +181,12 @@ public class PlayerController : MonoBehaviour, Damagable
             StopCoroutine(reload);
             reloadTimer = 0f;
         }
-        
+        if(Input.GetKeyDown(KeyCode.V)) 
+        {
+            stim = StimHeal();
+            StartCoroutine(stim);
+        }
+
         UpdateAmmoIndicator(weaponSlot);
     }
 
@@ -652,6 +660,44 @@ public class PlayerController : MonoBehaviour, Damagable
         Destroy(Trail.gameObject, Trail.time);
     }
 
+    private IEnumerator StimHeal()
+    {
+        for(int healTick=0; healTick<7; healTick++)
+        {
+            currentHealth += 10;
+            if(currentHealth>100) currentHealth = 100;
+            UpdateHealthUI(currentHealth);
+            yield return new WaitForSeconds(.5f);
+        }
+        StopCoroutine(stim);
+    }
+    private IEnumerator RegenCountdown()
+    {
+        float countdownTimer = 0f;
+        for (; ; )
+        {
+           countdownTimer+= Time.deltaTime;
+            if (countdownTimer >= 2)
+            {
+                countdown=RegenCountdown();
+                StartCoroutine(regen);
+                StopCoroutine(countdown);
+                countdownTimer = 0f;
+            }
+            yield return null;
+        }
+    }
+    private IEnumerator HealthRegen()
+    {
+        //for(int healTick=0; healTick<50; healTick++)
+        while(true) 
+        {
+            currentHealth+=.5f;
+            if (currentHealth > 100) currentHealth = 100;
+            UpdateHealthUI(currentHealth);
+            yield return new WaitForSeconds(.5f);
+        }
+    }
     private void UpdateHealthUI(float newHealth)
     {
         float fillAmount = newHealth / maxHealth;
@@ -660,6 +706,10 @@ public class PlayerController : MonoBehaviour, Damagable
 
     public void TakeDamage(float damage)
     {
+        
+      //  StopCoroutine(regen);
+     //   countdown = RegenCountdown();
+     //   StartCoroutine(countdown);
         currentHealth -= damage;
         if (currentHealth <= 0)
         {

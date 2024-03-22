@@ -807,6 +807,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7905f03c7c1677048a830899cedcb1f0, type: 3}
+--- !u!4 &399455832 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5575030791964071651, guid: 0c534401f59dcf04b955bcb01cb551b3, type: 3}
+  m_PrefabInstance: {fileID: 581765735}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &474671939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1122,6 +1127,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 3756397556749270202, guid: 0c534401f59dcf04b955bcb01cb551b3, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 399455832}
     - target: {fileID: 3964880453578430270, guid: 0c534401f59dcf04b955bcb01cb551b3, type: 3}
       propertyPath: m_Name
       value: Frenzy
@@ -1186,7 +1195,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3756397556749270202, guid: 0c534401f59dcf04b955bcb01cb551b3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
