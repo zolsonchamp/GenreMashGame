@@ -20,7 +20,6 @@ public class objectiveManager : MonoBehaviour, Damagable
     // Update is called once per frame
     void Update()
     {
-        
     }
     public void TakeDamage(float damage)
     {
