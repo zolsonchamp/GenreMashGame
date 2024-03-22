@@ -640,7 +640,7 @@ MonoBehaviour:
   rifleReloadTime: 2
   nadeReloadTime: 5
   revolverReloadTime: 2.4
-  shotgunReloadTime: 0.9
+  shotgunReloadTime: 1.4
   teslaReloadTime: 6
   flamethrowerReloadTime: 8
   reloadTimer: 0
@@ -664,7 +664,8 @@ MonoBehaviour:
     m_Bits: 4294967295
   bulletTracer: {fileID: 1260739578697129987, guid: 36b8292f14269914b93d70d446ba5992, type: 3}
   bulletSpeed: 100
-  bulletSpreadVariance: {x: 0.1, y: 0.1, z: 0.1}
+  rifleSpreadVariance: {x: 0.012, y: 0.012, z: 0.012}
+  shotgunSpreadVariance: {x: 0.1, y: 0.1, z: 0.1}
   nadeSpawn: {fileID: 4433619737945781388}
   nadeSpeed: 50
   teslaSpeed: 200

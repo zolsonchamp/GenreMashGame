@@ -95,7 +95,8 @@ public class PlayerController : MonoBehaviour, Damagable
     [SerializeField] LayerMask mask;
     [SerializeField] GameObject bulletTracer;
     public float bulletSpeed = 100f;
-    [SerializeField] private Vector3 bulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
+    [SerializeField] private Vector3 rifleSpreadVariance = new Vector3(0.012f, 0.012f, 0.012f);
+    [SerializeField] private Vector3 shotgunSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
 
     [SerializeField]
     Transform nadeSpawn;
@@ -231,6 +232,7 @@ public class PlayerController : MonoBehaviour, Damagable
         // Handle player movement
         if (isGrounded)
         {
+            gravity = 1.5f;
             if(isMud) 
             rb.velocity = new Vector3(moveDirection.x * moveSpeed/3, rb.velocity.y, moveDirection.z * moveSpeed/3);
             else
@@ -261,6 +263,7 @@ public class PlayerController : MonoBehaviour, Damagable
         if (!isGrounded)
         {
             rb.AddForce(Vector3.down * gravity, ForceMode.Force);
+            gravity += .003f;
         }
 
         //Animation
@@ -289,7 +292,7 @@ public class PlayerController : MonoBehaviour, Damagable
             {
                 rifleAmmoCount--;
 
-                Vector3 direction = GetDirection();
+                Vector3 direction = GetRifleDirection();
                 //Create shoot effect (muzzle flash)
 
                 if (Physics.Raycast(bulletSpawn.position, direction, out RaycastHit hit, float.MaxValue))
@@ -385,7 +388,7 @@ public class PlayerController : MonoBehaviour, Damagable
                 rb.AddForce(rb.velocity  * shotgunKnockback, ForceMode.Impulse);
                 for (int buckshot = 0; buckshot < 10; buckshot++)
                 {
-                    Vector3 direction = GetDirection();
+                    Vector3 direction = GetShotgunDirection();
                     //Create shoot effect (muzzle flash)
                 
                     if (Physics.Raycast(bulletSpawn.position, direction, out RaycastHit hit, float.MaxValue))
@@ -612,14 +615,28 @@ public class PlayerController : MonoBehaviour, Damagable
             }
         }*/
     }
-    private Vector3 GetDirection()
+    private Vector3 GetRifleDirection()
     {
         Vector3 direction = playerCam.transform.forward;
 
         direction += new Vector3(
-            Random.Range(-bulletSpreadVariance.x, bulletSpreadVariance.x),
-            Random.Range(-bulletSpreadVariance.y, bulletSpreadVariance.y),
-            Random.Range(-bulletSpreadVariance.z, bulletSpreadVariance.z)
+            Random.Range(-rifleSpreadVariance.x, rifleSpreadVariance.x),
+            Random.Range(-rifleSpreadVariance.y, rifleSpreadVariance.y),
+            Random.Range(-rifleSpreadVariance.z, rifleSpreadVariance.z)
+        );
+
+        direction.Normalize();
+
+        return direction;
+    }
+    private Vector3 GetShotgunDirection()
+    {
+        Vector3 direction = playerCam.transform.forward;
+
+        direction += new Vector3(
+            Random.Range(-shotgunSpreadVariance.x, shotgunSpreadVariance.x),
+            Random.Range(-shotgunSpreadVariance.y, shotgunSpreadVariance.y),
+            Random.Range(-shotgunSpreadVariance.z, shotgunSpreadVariance.z)
         );
 
         direction.Normalize();
