@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using FishNet.Connection;
+using FishNet.Object;
+using FishNet;
 
-public class placeWall : MonoBehaviour
+public class placeWall : NetworkBehaviour
 {
     public GameObject[] util;
     public GameObject selectedUtil;
@@ -29,6 +32,10 @@ public class placeWall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (!base.IsOwner)
+            return;
+
         //converts mouse position to a world position through camera
         screenPosition = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
@@ -104,8 +111,9 @@ public class placeWall : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             selectedUtil.transform.position = worldPosition;
-            Instantiate(selectedUtil);
-            
+            GameObject go = Instantiate(selectedUtil);
+            InstanceFinder.ServerManager.Spawn(go, null);
+
         }
         //rotate wall clockwise
         if (Input.GetKeyUp(KeyCode.R))

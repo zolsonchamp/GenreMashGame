@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using FishNet.Connection;
+using FishNet.Object;
 
-public class moveCamera : MonoBehaviour
+public class moveCamera : NetworkBehaviour
 {
     public float cameraSpeedVert = 1;
     public float cameraSpeedHoriz = 1;
@@ -12,15 +14,40 @@ public class moveCamera : MonoBehaviour
     public float cameraBoundsHoriz = 215;
     public float cameraBoundsZoomIn = 50;
     public float cameraBoundsZoomOut = 400;
+
+    public bool inUse = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if (inUse)
+        {
+            if (base.IsOwner)
+            {
+                Camera.main.transform.position = new Vector3(0, 150, 0);
+                Camera.main.transform.rotation = Quaternion.Euler(90, 0, 90);
+            }
+            else
+            {
+                transform.GetChild(1).gameObject.SetActive(false);
+                //gameObject.GetComponent<PlayerController>().enabled = false;
+            }
+        }
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!base.IsOwner)
+            return;
+
+
         //moves camera up
         if (Input.GetKey(KeyCode.W))
         {

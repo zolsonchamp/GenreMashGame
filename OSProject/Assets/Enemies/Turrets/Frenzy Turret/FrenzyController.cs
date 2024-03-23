@@ -1,3 +1,4 @@
+using FishNet;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -72,6 +73,7 @@ public class FrenzyController : MonoBehaviour, Damagable
                 }
 
                 TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                 StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
 
@@ -85,6 +87,7 @@ public class FrenzyController : MonoBehaviour, Damagable
             else
             {
                 TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                 StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 100, Vector3.zero, false));
 

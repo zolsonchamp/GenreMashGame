@@ -1,3 +1,4 @@
+using FishNet;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -73,6 +74,7 @@ public class TurretController : MonoBehaviour, Damagable
                 }
                 
                 TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                 StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
 
@@ -88,6 +90,7 @@ public class TurretController : MonoBehaviour, Damagable
                 TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
 
                 StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 100, Vector3.zero, false));
+                InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                 lastShootTime = Time.time;
                 if (shotCount >= burstLimit)
