@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour, Damagable
     public float maxHealth;
     public float walkSpeed;
     public float sprintSpeed;
+    public float slowModifier=1;
+    public bool isSlowed = false;
     public float groundDrag;
     public float jumpHeight;
     public float gravity;
@@ -62,6 +64,7 @@ public class PlayerController : MonoBehaviour, Damagable
     public float flamethrowerReloadTime;
     public float reloadTimer = 0f;
     private IEnumerator reload;
+    bool isReloading = false;
 
     int weaponSlot = 0;
 
@@ -70,6 +73,11 @@ public class PlayerController : MonoBehaviour, Damagable
     KeyCode shootButton;
     KeyCode altShootButton;
 
+    [Header("Jeals")]
+    public float stimCooldown;
+    float lastStimTime;
+    bool firstStim = true;
+    string stimReady = "READY";
     private IEnumerator stim;
     private IEnumerator countdown;
     private IEnumerator regen;
@@ -91,7 +99,6 @@ public class PlayerController : MonoBehaviour, Damagable
     
     [SerializeField]
     Transform bulletSpawn;
-    float lastRifleShootTime;
     [SerializeField] LayerMask mask;
     [SerializeField] GameObject bulletTracer;
     public float bulletSpeed = 100f;
@@ -100,6 +107,7 @@ public class PlayerController : MonoBehaviour, Damagable
 
     [SerializeField]
     Transform nadeSpawn;
+    float lastRifleShootTime;
     float lastNadeShootTime;
     float lastRevovlerShootTime;
     float lastShotgunShootTime;
@@ -115,6 +123,8 @@ public class PlayerController : MonoBehaviour, Damagable
 
     private void Awake()
     {
+        //lastStimTime= Time.time+stimCooldown;
+        reload = Reload(weaponSlot);
         regen = HealthRegen();
         flameCone.SetActive(false);
         rb = GetComponent<Rigidbody>();
@@ -131,7 +141,8 @@ public class PlayerController : MonoBehaviour, Damagable
 
     void Update()
     {
-        
+        if (isSlowed) slowModifier = 9;
+        else slowModifier = 1;
         GroundCheck();
         MudCheck();
         AcidCheck();
@@ -141,7 +152,7 @@ public class PlayerController : MonoBehaviour, Damagable
         HandleMovement();
         Shoot();
         altShoot();
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading)
         {
             reload = Reload(weaponSlot);
             StartCoroutine(reload);
@@ -150,44 +161,61 @@ public class PlayerController : MonoBehaviour, Damagable
         {
             weaponSlot = 0;
             StopCoroutine(reload);
+            isReloading = false;
             reloadTimer = 0f;
         }
         if (Input.GetKeyUp(KeyCode.Alpha2))
         {
             weaponSlot = 1;
             StopCoroutine(reload);
+            isReloading = false;
             reloadTimer = 0f;
         }
         if (Input.GetKeyUp(KeyCode.Alpha3))
         {
             weaponSlot = 2;
             StopCoroutine(reload);
+            isReloading = false;
             reloadTimer = 0f;
         }
         if (Input.GetKeyUp(KeyCode.Alpha4))
         {
             weaponSlot = 3;
             StopCoroutine(reload);
+            isReloading = false;
             reloadTimer = 0f;
         }
         if (Input.GetKeyUp(KeyCode.Alpha5))
         {
             weaponSlot = 4;
             StopCoroutine(reload);
+            isReloading = false;
             reloadTimer = 0f;
         }
         if (Input.GetKeyUp(KeyCode.Alpha6))
         {
             weaponSlot = 5;
             StopCoroutine(reload);
+            isReloading = false;
             reloadTimer = 0f;
         }
-        if(Input.GetKeyDown(KeyCode.V)) 
+        if(Input.GetKeyDown(KeyCode.V) && (lastStimTime+stimCooldown<Time.time || firstStim))
         {
+            StopCoroutine(reload);
+            isReloading = false;
+            firstStim = false;
             stim = StimHeal();
             StartCoroutine(stim);
+            lastStimTime= Time.time;
         }
-
+        if (lastStimTime + stimCooldown < Time.time || firstStim)
+        {
+            stimReady = "READY";
+        }
+        else
+        {
+            stimReady = string.Format("{0}", lastStimTime + stimCooldown - Time.time);
+        }
         UpdateAmmoIndicator(weaponSlot);
     }
 
@@ -234,9 +262,9 @@ public class PlayerController : MonoBehaviour, Damagable
         {
             gravity = 1.5f;
             if(isMud) 
-            rb.velocity = new Vector3(moveDirection.x * moveSpeed/3, rb.velocity.y, moveDirection.z * moveSpeed/3);
+            rb.velocity = new Vector3((moveDirection.x * moveSpeed/3)/slowModifier, rb.velocity.y, moveDirection.z * moveSpeed/3/slowModifier);
             else
-            rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
+            rb.velocity = new Vector3((moveDirection.x * moveSpeed)/slowModifier, rb.velocity.y, moveDirection.z * moveSpeed / slowModifier);
 
             jumpMomentum = moveDirection;
         }
@@ -455,6 +483,7 @@ public class PlayerController : MonoBehaviour, Damagable
     }
     IEnumerator Reload(int weaponSlot)
     {
+        isReloading = true;
         bool reloadComplete = false;
         
         switch (weaponSlot)
@@ -462,8 +491,16 @@ public class PlayerController : MonoBehaviour, Damagable
             case 0:
                 while (!reloadComplete)
                 {
+                    if (rifleAmmoCount == rifleAmmoCapacity)
+                    {
+                        reloadComplete = true;
+                        reloadTimer = 0f;
+                        isReloading = false;
+                        StopCoroutine(reload);
+                        break;
+                    }
                     reloadTimer += Time.deltaTime;
-                    ammoIndicator.text = string.Format("Reloading...\n{0}", rifleReloadTime-reloadTimer);
+                    ammoIndicator.text = string.Format("Reloading...\n{0}\nStim: {1}", rifleReloadTime-reloadTimer,stimReady);
                     if (reloadTimer >= rifleReloadTime)
                     {
                         rifleAmmoCount = rifleAmmoCapacity;
@@ -472,13 +509,22 @@ public class PlayerController : MonoBehaviour, Damagable
                     }
                     yield return null;
                 }
+                isReloading = false;
                 StopCoroutine(reload);
                 break;
             case 1:
                 while (!reloadComplete)
                 {
+                    if (nadeAmmoCount == nadeAmmoCapacity)
+                    {
+                        reloadComplete = true;
+                        reloadTimer = 0f;
+                        isReloading = false;
+                        StopCoroutine(reload);
+                        break;
+                    }
                     reloadTimer += Time.deltaTime;
-                    ammoIndicator.text = string.Format("Reloading...\n{0}", nadeReloadTime-reloadTimer);
+                    ammoIndicator.text = string.Format("Reloading...\n{0}\nStim: {1}", nadeReloadTime-reloadTimer,stimReady);
                     if (reloadTimer >= nadeReloadTime)
                     {
                         nadeAmmoCount = nadeAmmoCapacity;
@@ -487,13 +533,22 @@ public class PlayerController : MonoBehaviour, Damagable
                     }
                     yield return null;
                 }
+                isReloading = false;
                 StopCoroutine(reload);
                 break;
             case 2:
                 while (!reloadComplete)
                 {
+                    if (revolverAmmoCount == revolverAmmoCapacity)
+                    {
+                        reloadComplete = true;
+                        reloadTimer = 0f;
+                        isReloading = false;
+                        StopCoroutine(reload);
+                        break;
+                    }
                     reloadTimer += Time.deltaTime;
-                    ammoIndicator.text = string.Format("Reloading...\n{0}", revolverReloadTime-reloadTimer);
+                    ammoIndicator.text = string.Format("Reloading...\n{0}\nStim: {1}", revolverReloadTime-reloadTimer,stimReady);
                     if (reloadTimer >= revolverReloadTime)
                     {
                         revolverAmmoCount = revolverAmmoCapacity;
@@ -502,13 +557,22 @@ public class PlayerController : MonoBehaviour, Damagable
                     }
                     yield return null;
                 }
-                StopCoroutine (reload);
+                isReloading = false;
+                StopCoroutine(reload);
                 break;
             case 3:
                 while (!reloadComplete)
                 {
+                    if (shotgunAmmoCount == shotgunAmmoCapacity)
+                    {
+                        reloadComplete = true;
+                        reloadTimer = 0f;
+                        isReloading = false;
+                        StopCoroutine(reload);
+                        break;
+                    }
                     reloadTimer += Time.deltaTime;
-                    ammoIndicator.text = string.Format("Reloading...\n{0}", shotgunReloadTime-reloadTimer);
+                    ammoIndicator.text = string.Format("Reloading...\n{0}\nStim: {1}", shotgunReloadTime-reloadTimer,stimReady);
                     if (reloadTimer >= shotgunReloadTime)
                     {
                         shotgunAmmoCount = shotgunAmmoCapacity;
@@ -517,13 +581,22 @@ public class PlayerController : MonoBehaviour, Damagable
                     }
                     yield return null;
                 }
-                StopCoroutine (reload);
+                isReloading = false;
+                StopCoroutine(reload);
                 break;
             case 4:
                 while (!reloadComplete)
                 {
+                    if (teslaAmmoCount == teslaAmmoCapacity)
+                    {
+                        reloadComplete = true;
+                        reloadTimer = 0f;
+                        isReloading = false;
+                        StopCoroutine(reload);
+                        break;
+                    }
                     reloadTimer += Time.deltaTime;
-                    ammoIndicator.text = string.Format("Reloading...\n{0}", teslaReloadTime-reloadTimer);
+                    ammoIndicator.text = string.Format("Reloading...\n{0}\nStim: {1}", teslaReloadTime-reloadTimer, stimReady);
                     if (reloadTimer >= teslaReloadTime)
                     {
                         teslaAmmoCount = teslaAmmoCapacity;
@@ -532,13 +605,22 @@ public class PlayerController : MonoBehaviour, Damagable
                     }
                     yield return null;
                 }
-                StopCoroutine (reload);
+                isReloading = false;
+                StopCoroutine(reload);
                 break;
             case 5:
                 while (!reloadComplete)
                 {
+                    if (flamethrowerFuelCount == flamethrowerFuelCapacity)
+                    {
+                        reloadComplete = true;
+                        reloadTimer = 0f;
+                        isReloading = false;
+                        StopCoroutine(reload);
+                        break;
+                    }
                     reloadTimer += Time.deltaTime;
-                    ammoIndicator.text = string.Format("Reloading...\n{0}", flamethrowerReloadTime-reloadTimer);
+                    ammoIndicator.text = string.Format("Reloading...\n{0}\nStim: {1}", flamethrowerReloadTime-reloadTimer, stimReady);
                     if (reloadTimer >= flamethrowerReloadTime)
                     {
                         flamethrowerFuelCount = flamethrowerFuelCapacity;
@@ -547,18 +629,19 @@ public class PlayerController : MonoBehaviour, Damagable
                     }
                     yield return null;
                 }
+                isReloading = false;
                 StopCoroutine(reload);
                 break;
         }
     }
     public void UpdateAmmoIndicator(int weaponSlot)
     {
-        if (weaponSlot == 0) ammoIndicator.text = string.Format("Rifle\n{0}/{1}", rifleAmmoCount, rifleAmmoCapacity);
-        if (weaponSlot == 1) ammoIndicator.text = string.Format("Grenade Launcher\n{0}/{1}", nadeAmmoCount, nadeAmmoCapacity);
-        if (weaponSlot == 2) ammoIndicator.text = string.Format("Revolver\n{0}/{1}", revolverAmmoCount, revolverAmmoCapacity);
-        if (weaponSlot == 3) ammoIndicator.text = string.Format("Shotgun\n{0}/{1}", shotgunAmmoCount, shotgunAmmoCapacity);
-        if (weaponSlot == 4) ammoIndicator.text = string.Format("Tesla Cannon\n{0}/{1}\nCharge: {2}%", teslaAmmoCount, teslaAmmoCapacity,((teslaChargeCounter/teslaChargeTime)*100).ToString("0"));
-        if (weaponSlot == 5) ammoIndicator.text = string.Format("Flamethrower\n{0}/{1}", flamethrowerFuelCount, flamethrowerFuelCapacity);
+        if (weaponSlot == 0) ammoIndicator.text = string.Format("Rifle\n{0}/{1}\nStim: {2}", rifleAmmoCount, rifleAmmoCapacity,stimReady);
+        if (weaponSlot == 1) ammoIndicator.text = string.Format("Grenade Launcher\n{0}/{1}\nStim: {2}", nadeAmmoCount, nadeAmmoCapacity, stimReady);
+        if (weaponSlot == 2) ammoIndicator.text = string.Format("Revolver\n{0}/{1}\nStim: {2}", revolverAmmoCount, revolverAmmoCapacity,stimReady);
+        if (weaponSlot == 3) ammoIndicator.text = string.Format("Shotgun\n{0}/{1}\nStim: {2}", shotgunAmmoCount, shotgunAmmoCapacity, stimReady);
+        if (weaponSlot == 4) ammoIndicator.text = string.Format("Tesla Cannon\n{0}/{1}\nCharge: {2}%\nStim: {3}", teslaAmmoCount, teslaAmmoCapacity,Mathf.FloorToInt(teslaChargeCounter/teslaChargeTime*100).ToString("0"),stimReady);
+        if (weaponSlot == 5) ammoIndicator.text = string.Format("Flamethrower\n{0}/{1}\nStim: {2}", flamethrowerFuelCount, flamethrowerFuelCapacity, stimReady);
         
     }
     public void altShoot()

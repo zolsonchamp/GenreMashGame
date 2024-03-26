@@ -61,8 +61,9 @@ public class moveCamera : MonoBehaviour
                 Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, cameraBoundsHoriz);
             }
         }
+     
         //zooms camera in
-        if (Input.mouseScrollDelta.y > 0)
+        if (Input.mouseScrollDelta.y > 0 && Input.GetKey(KeyCode.LeftControl))
         {
             Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y-cameraZoom, Camera.main.transform.position.z);
             //sets limit to zoom in
@@ -72,7 +73,7 @@ public class moveCamera : MonoBehaviour
             }
         }
         //zooms camera out
-        if (Input.mouseScrollDelta.y < 0)
+        if (Input.mouseScrollDelta.y < 0 && Input.GetKey(KeyCode.LeftControl))
         {
             Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y + cameraZoom, Camera.main.transform.position.z);
             //sets limit to zoom out
@@ -81,5 +82,6 @@ public class moveCamera : MonoBehaviour
                 Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, cameraBoundsZoomOut, Camera.main.transform.position.z);
             }
         }
-    }
+    
+     }
 }

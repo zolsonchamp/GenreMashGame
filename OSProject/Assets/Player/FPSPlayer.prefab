@@ -566,6 +566,7 @@ GameObject:
   - component: {fileID: 8127660137841826603}
   - component: {fileID: 1577400039019278716}
   - component: {fileID: 5472682185714202213}
+  - component: {fileID: 2405541140955642620}
   m_Layer: 0
   m_Name: FPSPlayer
   m_TagString: Target
@@ -616,7 +617,7 @@ MonoBehaviour:
   rifleShootDelay: 0.1
   nadeShootDelay: 1
   revolverShootDelay: 0.75
-  shotgunShootDelay: 1
+  shotgunShootDelay: 0.4
   teslaShootDelay: 2.4
   teslaChargeCounter: 0
   teslaChargeTime: 0.7
@@ -628,13 +629,13 @@ MonoBehaviour:
   rifleAmmoCapacity: 36
   nadeAmmoCapacity: 8
   revolverAmmoCapacity: 6
-  shotgunAmmoCapacity: 1
+  shotgunAmmoCapacity: 2
   teslaAmmoCapacity: 4
   flamethrowerFuelCapacity: 100
   rifleAmmoCount: 36
   nadeAmmoCount: 8
   revolverAmmoCount: 6
-  shotgunAmmoCount: 1
+  shotgunAmmoCount: 2
   teslaAmmoCount: 4
   flamethrowerFuelCount: 100
   rifleReloadTime: 2
@@ -644,6 +645,7 @@ MonoBehaviour:
   teslaReloadTime: 6
   flamethrowerReloadTime: 8
   reloadTimer: 0
+  stimCooldown: 15
   ammoIndicator: {fileID: 1921568946715597946}
   animator: {fileID: 2236680187903701441}
   isGrounded: 0
@@ -699,6 +701,27 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!65 &2405541140955642620
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135153194875245096}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.51922035, z: 1}
+  m_Center: {x: 0, y: 0.24038982, z: 0}
 --- !u!1 &8580922226868392208
 GameObject:
   m_ObjectHideFlags: 0
