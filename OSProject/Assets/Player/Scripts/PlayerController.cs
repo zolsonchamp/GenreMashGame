@@ -129,8 +129,7 @@ public class PlayerController : NetworkBehaviour, Damagable
         jumpKey = KeyCode.Space;
         shootButton = KeyCode.Mouse0;
         altShootButton = KeyCode.Mouse1;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        
 
         currentHealth = maxHealth;
     }
@@ -140,6 +139,8 @@ public class PlayerController : NetworkBehaviour, Damagable
         base.OnStartClient();
         if (inUse)
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             if (base.IsOwner)
             {
                 playerCam = Camera.main;
