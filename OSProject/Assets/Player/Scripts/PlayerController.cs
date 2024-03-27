@@ -139,10 +139,11 @@ public class PlayerController : NetworkBehaviour, Damagable
         base.OnStartClient();
         if (inUse)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            
             if (base.IsOwner)
             {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 playerCam = Camera.main;
                 playerCam.transform.position = new Vector3(transform.position.x, transform.position.y + 1.75f, transform.position.z);
                 playerCam.transform.SetParent(transform);
