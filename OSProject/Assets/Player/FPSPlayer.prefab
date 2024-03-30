@@ -79,6 +79,81 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
+--- !u!1 &357016269250806972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 746031114722816323}
+  - component: {fileID: 513844055041061134}
+  - component: {fileID: 5427607951655335852}
+  m_Layer: 5
+  m_Name: flashScreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &746031114722816323
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357016269250806972}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5631480121618542376}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000030518, y: 0.000015259}
+  m_SizeDelta: {x: 1132, y: 572}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &513844055041061134
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357016269250806972}
+  m_CullTransparentMesh: 1
+--- !u!114 &5427607951655335852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357016269250806972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3346341526482240444
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +567,7 @@ GameObject:
   - component: {fileID: 3238032735402573037}
   - component: {fileID: 8278667713275641478}
   m_Layer: 5
-  m_Name: Image
+  m_Name: crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -606,6 +681,10 @@ MonoBehaviour:
   maxHealth: 100
   walkSpeed: 10
   sprintSpeed: 20
+  slowModifier: 1
+  isSlowed: 0
+  slowTimer: 0
+  slowDuration: 1.5
   groundDrag: 5
   jumpHeight: 15
   gravity: 1.5
@@ -673,6 +752,9 @@ MonoBehaviour:
   teslaSpeed: 200
   currentHealth: 100
   healthFill: {fileID: 7816099518184460378}
+  flashOpacity: 0
+  flashed: 0
+  flashScreen: {fileID: 0}
   playerCam: {fileID: 8964284749171279380}
 --- !u!54 &5472682185714202213
 Rigidbody:
@@ -753,9 +835,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3401662628821282870}
+  - {fileID: 746031114722816323}
   - {fileID: 4594636308092533285}
   - {fileID: 3011264406198658607}
-  - {fileID: 3401662628821282870}
   - {fileID: 4849837471139489865}
   m_Father: {fileID: 8305866481251866381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

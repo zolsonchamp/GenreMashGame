@@ -22,6 +22,9 @@ public class placeWall : MonoBehaviour
     public GameObject mudUI;
     public GameObject acidUI;
     public GameObject mineUI;
+    public GameObject flashMineUI;
+    public GameObject acidMineUI;
+    public GameObject decoyMineUI;
     public int utilSlot = 0;
     public int utilCategory = 0;
 
@@ -39,6 +42,9 @@ public class placeWall : MonoBehaviour
     public float mudCooldown;
     public float acidCooldown;
     public float explosiveMineCoolDown;
+    public float flashMineCoolDown;
+    public float acidMineCoolDown;
+    public float decoyMineCoolDown;
     float lastWoodWallUse;
     float lastConcreteWallUse;
     float lastElectricFenceUse;
@@ -50,6 +56,10 @@ public class placeWall : MonoBehaviour
     float lastMudUse;
     float lastAcidUse;
     float lastExplosiveMineUse;
+    float lastFlashMineUse;
+    float lastAcidMineUse;
+    float lastDecoyMineUse;
+
     bool firstWoodWallUse=true;
     bool firstConcreteWallUse=true;
     bool firstElectricFenceUse=true;
@@ -61,6 +71,10 @@ public class placeWall : MonoBehaviour
     bool firstMudUse=true;
     bool firstAcidUse=true;
     bool firstExplosiveMineUse=true;
+    bool firstFlashMineUse=true;
+    bool firstAcidMineUse=true;
+    bool firstDecoyMineUse=true;
+
     public Text cooldownUI;
     string woodWallState = "READY";
     string concreteWallState = "READY";
@@ -73,6 +87,10 @@ public class placeWall : MonoBehaviour
     string mudState = "READY";
     string acidState = "READY";
     string explosiveMineState = "READY";
+    string flashMineState = "READY";
+    string acidMineState = "READY";
+    string decoyMineState = "READY";
+
 
     float savedRotation = 0f;
     public Vector3 screenPosition;
@@ -139,11 +157,11 @@ public class placeWall : MonoBehaviour
             if (utilCategory == 2)
             {
                 utilSlot++;
-                if (utilSlot > 10)
+                if (utilSlot > 13)
                 {
                     utilSlot = 8;
                 }
-                utilSlot = (utilSlot % 11);
+                utilSlot = (utilSlot % 14);
             }
             //utilSlot = utilSlot % 11;
         }
@@ -173,9 +191,9 @@ public class placeWall : MonoBehaviour
                 utilSlot--;
                 if (utilSlot < 8)
                 {
-                    utilSlot = 10;
+                    utilSlot = 13;
                 }
-                utilSlot = utilSlot % 11;
+                utilSlot = utilSlot % 14;
             }
 
             /*
@@ -200,6 +218,9 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);   
+            decoyMineUI.SetActive(false);
         }
         if (utilSlot==1)
         {
@@ -216,6 +237,9 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
         }
 
         if (utilSlot == 2)
@@ -233,6 +257,9 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
         }
 
         if (utilSlot==3)
@@ -250,6 +277,9 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
         }
 
         if (utilSlot == 4)
@@ -267,6 +297,9 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
         }
 
         if (utilSlot == 5)
@@ -284,6 +317,9 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
         }
 
         if (utilSlot == 6)
@@ -301,6 +337,9 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
         }
 
         if (utilSlot == 7)
@@ -318,6 +357,9 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
         }
         if (utilSlot==8)
         {
@@ -334,6 +376,9 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(true);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
         }
         if (utilSlot==9)
         {
@@ -350,6 +395,9 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(false);
             acidUI.SetActive(true);
             mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
         }
         if (utilSlot==10)
         {
@@ -366,6 +414,66 @@ public class placeWall : MonoBehaviour
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(true);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
+        }
+        if (utilSlot == 11)
+        {
+            selectedUtilUI = flashMineUI;
+            //   selectedUtilUI = util[5];
+            woodWallUI.SetActive(false);
+            concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(false);
+            turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
+            mudUI.SetActive(false);
+            acidUI.SetActive(false);
+            mineUI.SetActive(false);
+            flashMineUI.SetActive(true);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(false);
+        }
+        if (utilSlot == 12)
+        {
+            selectedUtilUI = acidMineUI;
+            //   selectedUtilUI = util[5];
+            woodWallUI.SetActive(false);
+            concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(false);
+            turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
+            mudUI.SetActive(false);
+            acidUI.SetActive(false);
+            mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(true);
+            decoyMineUI.SetActive(false);
+        }
+        if (utilSlot == 13)
+        {
+            selectedUtilUI = decoyMineUI;
+            //   selectedUtilUI = util[5];
+            woodWallUI.SetActive(false);
+            concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(false);
+            turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
+            mudUI.SetActive(false);
+            acidUI.SetActive(false);
+            mineUI.SetActive(false);
+            flashMineUI.SetActive(false);
+            acidMineUI.SetActive(false);
+            decoyMineUI.SetActive(true);
         }
         /* if (Input.GetKeyDown(KeyCode.Alpha1))
      {
@@ -594,13 +702,49 @@ public class placeWall : MonoBehaviour
         }
         if (utilSlot == 10)
         {
-            if (Input.GetMouseButtonDown(0) && (lastExplosiveMineUse + lastExplosiveMineUse < Time.time || firstExplosiveMineUse))
+            if (Input.GetMouseButtonDown(0) && (lastExplosiveMineUse + explosiveMineCoolDown < Time.time || firstExplosiveMineUse))
             {
                 firstExplosiveMineUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
                 Instantiate(util[utilSlot]);
                 lastExplosiveMineUse = Time.time;
+
+            }
+        }
+        if (utilSlot == 11)
+        {
+            if (Input.GetMouseButtonDown(0) && (lastFlashMineUse + flashMineCoolDown < Time.time || firstFlashMineUse))
+            {
+                firstFlashMineUse = false;
+                util[utilSlot].transform.position = worldPosition;
+                util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
+                Instantiate(util[utilSlot]);
+                lastFlashMineUse = Time.time;
+
+            }
+        }
+        if (utilSlot == 12)
+        {
+            if (Input.GetMouseButtonDown(0) && (lastAcidMineUse + acidMineCoolDown < Time.time || firstAcidMineUse))
+            {
+                firstAcidMineUse = false;
+                util[utilSlot].transform.position = worldPosition;
+                util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
+                Instantiate(util[utilSlot]);
+                lastAcidMineUse = Time.time;
+
+            }
+        }
+        if (utilSlot == 13)
+        {
+            if (Input.GetMouseButtonDown(0) && (lastDecoyMineUse + decoyMineCoolDown < Time.time || firstDecoyMineUse))
+            {
+                firstDecoyMineUse = false;
+                util[utilSlot].transform.position = worldPosition;
+                util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
+                Instantiate(util[utilSlot]);
+                lastDecoyMineUse = Time.time;
 
             }
         }
@@ -695,6 +839,31 @@ public class placeWall : MonoBehaviour
         {
             explosiveMineState = string.Format("{0}", Mathf.FloorToInt(lastExplosiveMineUse + explosiveMineCoolDown - Time.time) + 1);
         }
+        if (lastFlashMineUse + flashMineCoolDown < Time.time || firstFlashMineUse)
+        {
+            flashMineState = "READY";
+        }
+        else
+        {
+            flashMineState = string.Format("{0}", Mathf.FloorToInt(lastFlashMineUse + flashMineCoolDown - Time.time) + 1);
+        }
+        if (lastAcidMineUse + acidMineCoolDown < Time.time || firstAcidMineUse)
+        {
+            acidMineState = "READY";
+        }
+        else
+        {
+            acidMineState = string.Format("{0}", Mathf.FloorToInt(lastAcidMineUse + acidMineCoolDown - Time.time) + 1);
+        }
+        if (lastDecoyMineUse + decoyMineCoolDown < Time.time || firstDecoyMineUse)
+        {
+            decoyMineState = "READY";
+        }
+        else
+        {
+            decoyMineState = string.Format("{0}", Mathf.FloorToInt(lastDecoyMineUse + decoyMineCoolDown - Time.time) + 1);
+        }
+
         if (utilCategory == 0)
         {
             cooldownUI.text = string.Format("Wood Wall: {0}\nConcrete Wall: {1}\nElectric Fence: {2}", woodWallState, concreteWallState,electricFenceState);
@@ -705,7 +874,7 @@ public class placeWall : MonoBehaviour
         }
         if(utilCategory == 2)
         {
-            cooldownUI.text= string.Format("Mud: {0}\nAcid: {1}\nExplosive Mine: {2}", mudState, acidState, explosiveMineState);
+            cooldownUI.text= string.Format("Mud: {0}\nAcid: {1}\nExplosive Mine: {2}\nFlash Mine: {3}\nAcid Mine: {4}\nDecoy Mine: {5}", mudState, acidState, explosiveMineState,flashMineState,acidMineState,decoyMineState);
         }
     }
 }

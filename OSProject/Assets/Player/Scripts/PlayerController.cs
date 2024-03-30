@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour, Damagable
+public class PlayerController : MonoBehaviour, Damagable,Flash
 {
     [Header("Stats")]
     public float maxHealth;
@@ -120,6 +120,9 @@ public class PlayerController : MonoBehaviour, Damagable
     public float currentHealth;
     [SerializeField] Image healthFill;
 
+    public float flashOpacity = 0f;
+    public bool flashed = false;
+    public Image flashScreen;
     [SerializeField]
     private Camera playerCam;
 
@@ -143,6 +146,13 @@ public class PlayerController : MonoBehaviour, Damagable
 
     void Update()
     {
+     //   if (flashed)
+     //   {
+            var tempColor = flashScreen.color;
+        flashOpacity = tempColor.a;
+            tempColor.a-=.001f;
+        flashScreen.color = tempColor;
+    //    }
         if (isSlowed)
         {
             slowModifier = 9;
@@ -819,7 +829,13 @@ public class PlayerController : MonoBehaviour, Damagable
         float fillAmount = newHealth / maxHealth;
         healthFill.fillAmount = fillAmount;
     }
+    public void Flashbang(float duration)
+    {
+        var flashColor = flashScreen.color;
+        flashColor.a = duration;
+        flashScreen.color = flashColor;
 
+    }
     public void TakeDamage(float damage)
     {
         

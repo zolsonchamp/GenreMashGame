@@ -34,7 +34,7 @@ public class TriggerMine : MonoBehaviour, Damagable, Electronic
         targetDis = Vector3.Distance(target.position, transform.position);
         if (targetDis <= triggerRange && !disabled)
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
             GameObject.FindGameObjectWithTag("Target").GetComponent<Damagable>()?.TakeDamage(mineDamage);
         }
     }
