@@ -1195,12 +1195,36 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1802850754}
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: frenzyTurretUI
+      value: 
+      objectReference: {fileID: 1190133107}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: selectedUtilUI
       value: 
       objectReference: {fileID: 1779226778}
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: sniperTurretUI
+      value: 
+      objectReference: {fileID: 1190133107}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: ElectricFenceUI
+      value: 
+      objectReference: {fileID: 969081168}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: armoredTurretUI
+      value: 
+      objectReference: {fileID: 1190133107}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: shotgunTurretUI
+      value: 
+      objectReference: {fileID: 1190133107}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: woodWallCoolDown
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: layersToHit.m_Bits
+      value: 264
       objectReference: {fileID: 0}
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: basicTurretCoolDown
@@ -1211,7 +1235,27 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: frenzyTurretCoolDown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: sniperTurretCoolDown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: armoredTurretCoolDown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: electricFenceCoolDown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: explosiveMineCoolDown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: shotgunTurretCoolDown
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6254930776074804070, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
@@ -1257,6 +1301,10 @@ PrefabInstance:
     - target: {fileID: 6739165986530188326, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: m_Name
       value: RTSPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645733002666236595, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2179,6 +2227,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+--- !u!1 &969081168 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8645733002666236595, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+  m_PrefabInstance: {fileID: 624087909}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &983187330
 PrefabInstance:
   m_ObjectHideFlags: 0

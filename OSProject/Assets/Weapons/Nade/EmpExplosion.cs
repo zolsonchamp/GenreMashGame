@@ -5,6 +5,7 @@ using UnityEngine;
 public class EmpExplosion : MonoBehaviour
 {
     int count = 0;
+    public float empDuration;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,15 @@ public class EmpExplosion : MonoBehaviour
         //other.gameObject.GetComponent<Electronic>()?.Overload();
         //overload should deactivate firing scripts and damaging scripts for the affected targets
         //Objects to be given Electronic behavior:turrets and electric fence
-        
+        if (other.gameObject.tag != "Target")
+        {
+            other.gameObject.GetComponent<Electronic>()?.Deactivate(empDuration);
+            other.gameObject.GetComponent<Electronic>()?.ResetDuration();
+            //create behavior Electronic
+            //other.gameObject.GetComponent<Electronic>()?.Overload();
+            //overload should deactivate firing scripts and damaging scripts for the affected targets
+            //Objects to be given Electronic behavior:turrets and electric fence
+
+        }
     }
 }

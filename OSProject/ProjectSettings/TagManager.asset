@@ -9,6 +9,7 @@ TagManager:
   - Objective
   - nade
   - explosion
+  - Wood
   layers:
   - Default
   - TransparentFX

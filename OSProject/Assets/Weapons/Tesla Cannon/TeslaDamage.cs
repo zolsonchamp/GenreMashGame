@@ -5,6 +5,7 @@ using UnityEngine;
 public class TeslaDamage : MonoBehaviour
 {
     public float damage;
+    public float empDuration;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,8 @@ public class TeslaDamage : MonoBehaviour
         {
             Debug.Log("Tesla Round hit " + other.gameObject);
             other.gameObject.GetComponent<Damagable>()?.TakeDamage(damage);
+            other.gameObject.GetComponent<Electronic>()?.Deactivate(empDuration);
+            other.gameObject.GetComponent<Electronic>()?.ResetDuration();
             //create behavior Electronic
             //other.gameObject.GetComponent<Electronic>()?.Overload();
             //overload should deactivate firing scripts and damaging scripts for the affected targets

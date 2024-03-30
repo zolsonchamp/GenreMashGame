@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
-public class TurretController : MonoBehaviour, Damagable
+public class TurretController : MonoBehaviour, Damagable, Electronic
 {
 
     //Prefabs and tranforms
@@ -31,8 +31,11 @@ public class TurretController : MonoBehaviour, Damagable
     public Transform target;
     float targetDis;
     public float attackRange;
- 
+    
 
+    public bool disabled = false;
+    public float empTimer = 0f;
+    public float empDuration=0f;
     void Start()
     {
         //Get Player as target
@@ -41,6 +44,10 @@ public class TurretController : MonoBehaviour, Damagable
 
     void Update()
     {
+        if (disabled)
+        {
+            Deactivate(empDuration);
+        }
         GameObject targetObject = GameObject.FindGameObjectWithTag("Target");
         target = targetObject.transform;
         CheckTargetDistance();
@@ -59,7 +66,7 @@ public class TurretController : MonoBehaviour, Damagable
     public void Shoot()
     {
 
-        if (lastShootTime + shootDelay < Time.time)
+        if (lastShootTime + shootDelay < Time.time && !disabled)
         {
             shootDelay = burstRate;
             Vector3 direction = GetDirection();
@@ -147,7 +154,22 @@ public class TurretController : MonoBehaviour, Damagable
             return;
         }
     }
-
+    public void Deactivate(float duration)
+    {
+        empDuration = duration;
+        disabled = true;
+        empTimer += Time.deltaTime;
+        if (empTimer > duration)
+        {
+            disabled = false;
+            empTimer=0;
+            empDuration = 0;
+        }
+    }
+    public void ResetDuration()
+    {
+        empTimer = 0;
+    }
     private void Die()
     {
         Destroy(gameObject);

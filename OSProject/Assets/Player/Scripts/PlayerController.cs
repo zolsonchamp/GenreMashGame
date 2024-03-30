@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour, Damagable
     public float sprintSpeed;
     public float slowModifier=1;
     public bool isSlowed = false;
+    public float slowTimer = 0;
+    public float slowDuration = 1.5f;
     public float groundDrag;
     public float jumpHeight;
     public float gravity;
@@ -141,7 +143,11 @@ public class PlayerController : MonoBehaviour, Damagable
 
     void Update()
     {
-        if (isSlowed) slowModifier = 9;
+        if (isSlowed)
+        {
+            slowModifier = 9;
+            removeSlow();
+        }
         else slowModifier = 1;
         GroundCheck();
         MudCheck();
@@ -297,7 +303,17 @@ public class PlayerController : MonoBehaviour, Damagable
         //Animation
         //animator.SetFloat("PlayerMoveSpeed", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
     }
-
+    public void removeSlow()
+    {
+        slowTimer += Time.deltaTime;
+        if (slowTimer > slowDuration)
+        {
+            isSlowed = false;
+            slowTimer = 0;
+        }
+            
+        
+    }
     void HandleLook()
     {
         // Player Look

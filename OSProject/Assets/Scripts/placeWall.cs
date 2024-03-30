@@ -12,30 +12,51 @@ public class placeWall : MonoBehaviour
     public GameObject selectedUtilUI;
     public GameObject woodWallUI;
     public GameObject concreteWallUI;
+    public GameObject ElectricFenceUI;
     public GameObject turretUI;
+    public GameObject armoredTurretUI;
+    public GameObject frenzyTurretUI;
+    public GameObject shotgunTurretUI;
+    public GameObject sniperTurretUI;
     public GameObject mudUI;
     public GameObject acidUI;
     public GameObject mineUI;
     public int utilSlot = 0;
+    public int utilCategory = 0;
 
     public float rotationSpeed;
 
     [Header("Utility Cooldowns")]
     public float woodWallCoolDown;
     public float concreteWallCoolDown;
+    public float electricFenceCoolDown;
     public float basicTurretCoolDown;
+    public float armoredTurretCoolDown;
+    public float frenzyTurretCoolDown;
+    public float shotgunTurretCoolDown;
+    public float sniperTurretCoolDown;
     public float mudCooldown;
     public float acidCooldown;
     public float explosiveMineCoolDown;
     float lastWoodWallUse;
     float lastConcreteWallUse;
+    float lastElectricFenceUse;
     float lastBasicTurretUse;
+    float lastArmoredTurretUse;
+    float lastFrenzyTurretUse;
+    float lastShotgunTurretUse;
+    float lastSniperTurretUse;
     float lastMudUse;
     float lastAcidUse;
     float lastExplosiveMineUse;
     bool firstWoodWallUse=true;
     bool firstConcreteWallUse=true;
+    bool firstElectricFenceUse=true;
     bool firstBasicTurretUse=true;
+    bool firstArmoredTurretUse=true;
+    bool firstFrenzyTurretUse=true;
+    bool firstShotgunTurretUse=true;
+    bool firstSniperTurretUse=true;
     bool firstMudUse=true;
     bool firstAcidUse=true;
     bool firstExplosiveMineUse=true;
@@ -77,26 +98,99 @@ public class placeWall : MonoBehaviour
 
         //selectedUtilUI = util[utilSlot];
         //object selection
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            utilCategory = 0;
+            utilSlot = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            utilCategory = 1;
+            utilSlot = 3;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            utilCategory=2;
+            utilSlot = 8;
+        }
         if (Input.mouseScrollDelta.y < 0 && !Input.GetKey(KeyCode.LeftControl))
         {
-            utilSlot++;
-            utilSlot = utilSlot % 6;
+            //utilSlot++;
+            if (utilCategory == 0)
+            {
+                utilSlot++;
+                utilSlot = utilSlot % 3;
+            }
+            if(utilCategory == 1)
+            {
+                utilSlot++;
+                if (utilSlot > 7)
+                {
+                    utilSlot = 3;
+                }
+                utilSlot = utilSlot % 8;
+            }
+            if (utilCategory == 2)
+            {
+                utilSlot++;
+                if (utilSlot > 10)
+                {
+                    utilSlot = 8;
+                }
+                utilSlot = (utilSlot % 11);
+            }
+            //utilSlot = utilSlot % 11;
         }
         if (Input.mouseScrollDelta.y > 0 && !Input.GetKey(KeyCode.LeftControl))
         {
-            utilSlot--;
+            //utilSlot--;
+            if (utilCategory == 0)
+            {
+                utilSlot--;
+                if (utilSlot < 0)
+                {
+                    utilSlot += 3;
+                }
+
+                utilSlot = utilSlot % 3;
+            }
+            if(utilCategory == 1) {
+                utilSlot--;
+                if(utilSlot < 3)
+                {
+                    utilSlot = 7;
+                }
+                utilSlot = (utilSlot % 8);
+            }
+            if(utilCategory == 2)
+            {
+                utilSlot--;
+                if (utilSlot < 8)
+                {
+                    utilSlot = 10;
+                }
+                utilSlot = utilSlot % 11;
+            }
+
+            /*
             if (utilSlot < 0)
             {
-                utilSlot += 6;
+                utilSlot += 11;
             }
-            utilSlot = utilSlot % 6;
+            utilSlot = utilSlot % 11;
+        */
         }
         if(utilSlot==0)
         {
             selectedUtilUI = woodWallUI;
             woodWallUI.SetActive(true);
             concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(false);
             turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
@@ -107,51 +201,162 @@ public class placeWall : MonoBehaviour
             //   selectedUtilUI = util[1];
             woodWallUI.SetActive(false);
             concreteWallUI.SetActive(true);
+            ElectricFenceUI.SetActive (false);
             turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
         }
-        if (utilSlot==2)
+
+        if (utilSlot == 2)
+        {
+            selectedUtilUI = ElectricFenceUI;
+            //   selectedUtilUI = util[2];
+            woodWallUI.SetActive(false);
+            concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(true);
+            turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
+            mudUI.SetActive(false);
+            acidUI.SetActive(false);
+            mineUI.SetActive(false);
+        }
+
+        if (utilSlot==3)
         {
             selectedUtilUI = turretUI;
             //   selectedUtilUI = util[2];
             woodWallUI.SetActive(false);
             concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(false);
             turretUI.SetActive(true);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
         }
-        if (utilSlot==3)
+
+        if (utilSlot == 4)
+        {
+            selectedUtilUI = armoredTurretUI;
+            //   selectedUtilUI = util[2];
+            woodWallUI.SetActive(false);
+            concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(false);
+            turretUI.SetActive(false);
+            armoredTurretUI.SetActive(true);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
+            mudUI.SetActive(false);
+            acidUI.SetActive(false);
+            mineUI.SetActive(false);
+        }
+
+        if (utilSlot == 5)
+        {
+            selectedUtilUI = frenzyTurretUI;
+            //   selectedUtilUI = util[2];
+            woodWallUI.SetActive(false);
+            concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(false);
+            turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(true);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
+            mudUI.SetActive(false);
+            acidUI.SetActive(false);
+            mineUI.SetActive(false);
+        }
+
+        if (utilSlot == 6)
+        {
+            selectedUtilUI = shotgunTurretUI;
+            //   selectedUtilUI = util[2];
+            woodWallUI.SetActive(false);
+            concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(false);
+            turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(true);
+            sniperTurretUI.SetActive(false);
+            mudUI.SetActive(false);
+            acidUI.SetActive(false);
+            mineUI.SetActive(false);
+        }
+
+        if (utilSlot == 7)
+        {
+            selectedUtilUI = sniperTurretUI;
+            //   selectedUtilUI = util[2];
+            woodWallUI.SetActive(false);
+            concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(false);
+            turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(true);
+            mudUI.SetActive(false);
+            acidUI.SetActive(false);
+            mineUI.SetActive(false);
+        }
+        if (utilSlot==8)
         {
             selectedUtilUI = mudUI;
             //  selectedUtilUI = util[3];
             woodWallUI.SetActive(false);
             concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive (false);
             turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
             mudUI.SetActive(true);
             acidUI.SetActive(false);
             mineUI.SetActive(false);
         }
-        if (utilSlot==4)
+        if (utilSlot==9)
         {
             selectedUtilUI = acidUI;
             //  selectedUtilUI = util[4];
             woodWallUI.SetActive(false);
             concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive(false);
             turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
             mudUI.SetActive(false);
             acidUI.SetActive(true);
             mineUI.SetActive(false);
         }
-        if (utilSlot==5)
+        if (utilSlot==10)
         {
             selectedUtilUI = mineUI;
             //   selectedUtilUI = util[5];
             woodWallUI.SetActive(false);
             concreteWallUI.SetActive(false);
+            ElectricFenceUI.SetActive (false);
             turretUI.SetActive(false);
+            armoredTurretUI.SetActive(false);
+            frenzyTurretUI.SetActive(false);
+            shotgunTurretUI.SetActive(false);
+            sniperTurretUI.SetActive(false);
             mudUI.SetActive(false);
             acidUI.SetActive(false);
             mineUI.SetActive(true);
@@ -287,6 +492,18 @@ public class placeWall : MonoBehaviour
         }
         if (utilSlot == 2)
         {
+            if (Input.GetMouseButtonDown(0) && (lastElectricFenceUse + electricFenceCoolDown < Time.time || firstElectricFenceUse))
+            {
+                firstElectricFenceUse = false;
+                util[utilSlot].transform.position = worldPosition;
+                util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
+                Instantiate(util[utilSlot]);
+                lastElectricFenceUse = Time.time;
+
+            }
+        }
+        if (utilSlot == 3)
+        {
             if (Input.GetMouseButtonDown(0) && (lastBasicTurretUse + basicTurretCoolDown < Time.time || firstBasicTurretUse))
             {
                 firstBasicTurretUse = false;
@@ -297,7 +514,55 @@ public class placeWall : MonoBehaviour
 
             }
         }
-        if (utilSlot == 3)
+        if (utilSlot == 4)
+        {
+            if (Input.GetMouseButtonDown(0) && (lastArmoredTurretUse + armoredTurretCoolDown < Time.time || firstArmoredTurretUse))
+            {
+                firstArmoredTurretUse = false;
+                util[utilSlot].transform.position = worldPosition;
+                util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
+                Instantiate(util[utilSlot]);
+                lastArmoredTurretUse = Time.time;
+
+            }
+        }
+        if (utilSlot == 5)
+        {
+            if (Input.GetMouseButtonDown(0) && (lastFrenzyTurretUse + frenzyTurretCoolDown < Time.time || firstFrenzyTurretUse))
+            {
+                firstFrenzyTurretUse = false;
+                util[utilSlot].transform.position = worldPosition;
+                util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
+                Instantiate(util[utilSlot]);
+                lastFrenzyTurretUse = Time.time;
+
+            }
+        }
+        if (utilSlot == 6)
+        {
+            if (Input.GetMouseButtonDown(0) && (lastShotgunTurretUse + shotgunTurretCoolDown < Time.time || firstShotgunTurretUse))
+            {
+                firstShotgunTurretUse = false;
+                util[utilSlot].transform.position = worldPosition;
+                util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
+                Instantiate(util[utilSlot]);
+                lastShotgunTurretUse = Time.time;
+
+            }
+        }
+        if (utilSlot == 7)
+        {
+            if (Input.GetMouseButtonDown(0) && (lastSniperTurretUse + sniperTurretCoolDown < Time.time || firstSniperTurretUse))
+            {
+                firstSniperTurretUse = false;
+                util[utilSlot].transform.position = worldPosition;
+                util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
+                Instantiate(util[utilSlot]);
+                lastSniperTurretUse = Time.time;
+
+            }
+        }
+        if (utilSlot == 8)
         {
             if (Input.GetMouseButtonDown(0) && (lastMudUse + mudCooldown < Time.time || firstMudUse))
             {
@@ -309,7 +574,7 @@ public class placeWall : MonoBehaviour
 
             }
         }
-        if (utilSlot == 4)
+        if (utilSlot == 9)
         {
             if (Input.GetMouseButtonDown(0) && (lastAcidUse + acidCooldown < Time.time || firstAcidUse))
             {
@@ -321,7 +586,7 @@ public class placeWall : MonoBehaviour
 
             }
         }
-        if (utilSlot == 5)
+        if (utilSlot == 10)
         {
             if (Input.GetMouseButtonDown(0) && (lastExplosiveMineUse + lastExplosiveMineUse < Time.time || firstExplosiveMineUse))
             {

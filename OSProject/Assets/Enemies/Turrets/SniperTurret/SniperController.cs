@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SniperController : MonoBehaviour, Damagable
+public class SniperController : MonoBehaviour, Damagable, Electronic
 {
     //Prefabs and tranforms
     [SerializeField] Transform bulletSpawn;
@@ -32,6 +32,9 @@ public class SniperController : MonoBehaviour, Damagable
     float targetDis;
     public float attackRange;
 
+    public bool disabled = false;
+    public float empTimer = 0;
+    public float empDuration = 0;
 
     void Start()
     {
@@ -41,6 +44,7 @@ public class SniperController : MonoBehaviour, Damagable
 
     void Update()
     {
+        if (disabled) { Deactivate(empDuration); }  
         GameObject targetObject = GameObject.FindGameObjectWithTag("Target");
         target = targetObject.transform;
         CheckTargetDistance();
@@ -63,7 +67,7 @@ public class SniperController : MonoBehaviour, Damagable
     public void Shoot()
     {
 
-        if (lastShootTime + shootDelay < Time.time)
+        if (lastShootTime + shootDelay < Time.time && !disabled)
         {
             shootDelay = burstRate;
             Vector3 direction = GetDirection();
@@ -157,7 +161,22 @@ public class SniperController : MonoBehaviour, Damagable
             return;
         }
     }
-
+    public void Deactivate(float duration)
+    {
+        empDuration = duration;
+        disabled = true;
+        empTimer += Time.deltaTime;
+        if (empTimer > duration)
+        {
+            disabled = false;
+            empTimer = 0;
+            empDuration = 0;
+        }
+    }
+    public void ResetDuration()
+    {
+        empTimer = 0;
+    }
     private void Die()
     {
         Destroy(gameObject);
