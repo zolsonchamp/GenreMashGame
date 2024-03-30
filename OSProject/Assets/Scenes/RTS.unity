@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &26678746 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4323997380389381136, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+  m_PrefabInstance: {fileID: 624087909}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &31563702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -658,6 +663,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 971070222931199393, guid: 7905f03c7c1677048a830899cedcb1f0, type: 3}
   m_PrefabInstance: {fileID: 1602426112}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &356465314 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6467633892892924540, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+  m_PrefabInstance: {fileID: 624087909}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &375624773 stripped
 GameObject:
@@ -1197,7 +1207,7 @@ PrefabInstance:
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: frenzyTurretUI
       value: 
-      objectReference: {fileID: 1190133107}
+      objectReference: {fileID: 1271577284}
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: selectedUtilUI
       value: 
@@ -1205,7 +1215,7 @@ PrefabInstance:
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: sniperTurretUI
       value: 
-      objectReference: {fileID: 1190133107}
+      objectReference: {fileID: 26678746}
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: ElectricFenceUI
       value: 
@@ -1213,11 +1223,11 @@ PrefabInstance:
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: armoredTurretUI
       value: 
-      objectReference: {fileID: 1190133107}
+      objectReference: {fileID: 356465314}
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: shotgunTurretUI
       value: 
-      objectReference: {fileID: 1190133107}
+      objectReference: {fileID: 1606330720}
     - target: {fileID: 4359167007482846860, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: woodWallCoolDown
       value: 5
@@ -2799,6 +2809,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7905f03c7c1677048a830899cedcb1f0, type: 3}
+--- !u!1 &1271577284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6924097477423755330, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+  m_PrefabInstance: {fileID: 624087909}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1276953581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3478,6 +3493,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7905f03c7c1677048a830899cedcb1f0, type: 3}
+--- !u!1 &1606330720 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8540012612032585879, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+  m_PrefabInstance: {fileID: 624087909}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1614098797
 PrefabInstance:
   m_ObjectHideFlags: 0

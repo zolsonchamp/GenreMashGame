@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -63,7 +64,12 @@ public class placeWall : MonoBehaviour
     public Text cooldownUI;
     string woodWallState = "READY";
     string concreteWallState = "READY";
+    string electricFenceState = "READY";
     string basicTurretState = "READY";
+    string armoredTurretState = "READY";
+    string frenzyTurretState = "READY";
+    string shotgunTurretState = "READY";
+    string sniperTurretState = "READY";
     string mudState = "READY";
     string acidState = "READY";
     string explosiveMineState = "READY";
@@ -617,6 +623,14 @@ public class placeWall : MonoBehaviour
         {
             concreteWallState = string.Format("{0}", Mathf.FloorToInt(lastConcreteWallUse + concreteWallCoolDown - Time.time)+1);
         }
+        if (lastElectricFenceUse + electricFenceCoolDown < Time.time || firstElectricFenceUse)
+        {
+            electricFenceState = "READY";
+        }
+        else
+        {
+            electricFenceState = string.Format("{0}", Mathf.FloorToInt(lastElectricFenceUse + electricFenceCoolDown - Time.time) + 1);
+        }
         if (lastBasicTurretUse + basicTurretCoolDown < Time.time||firstBasicTurretUse)
         {
             basicTurretState = "READY";
@@ -624,6 +638,38 @@ public class placeWall : MonoBehaviour
         else
         {
             basicTurretState = string.Format("{0}", Mathf.FloorToInt(lastBasicTurretUse + basicTurretCoolDown - Time.time)+1);
+        }
+        if (lastArmoredTurretUse + armoredTurretCoolDown < Time.time || firstArmoredTurretUse)
+        {
+            armoredTurretState = "READY";
+        }
+        else
+        {
+            armoredTurretState = string.Format("{0}", Mathf.FloorToInt(lastArmoredTurretUse + armoredTurretCoolDown - Time.time) + 1);
+        }
+        if (lastFrenzyTurretUse + frenzyTurretCoolDown < Time.time || firstFrenzyTurretUse)
+        {
+            frenzyTurretState = "READY";
+        }
+        else
+        {
+            frenzyTurretState = string.Format("{0}", Mathf.FloorToInt(lastFrenzyTurretUse + frenzyTurretCoolDown - Time.time) + 1);
+        }
+        if (lastShotgunTurretUse + shotgunTurretCoolDown < Time.time || firstShotgunTurretUse)
+        {
+            shotgunTurretState = "READY";
+        }
+        else
+        {
+            shotgunTurretState = string.Format("{0}", Mathf.FloorToInt(lastShotgunTurretUse + shotgunTurretCoolDown - Time.time) + 1);
+        }
+        if (lastSniperTurretUse + sniperTurretCoolDown < Time.time || firstSniperTurretUse)
+        {
+            sniperTurretState = "READY";
+        }
+        else
+        {
+            sniperTurretState = string.Format("{0}", Mathf.FloorToInt(lastSniperTurretUse + sniperTurretCoolDown - Time.time) + 1);
         }
         if (lastMudUse + mudCooldown < Time.time||firstMudUse)
         {
@@ -649,7 +695,17 @@ public class placeWall : MonoBehaviour
         {
             explosiveMineState = string.Format("{0}", Mathf.FloorToInt(lastExplosiveMineUse + explosiveMineCoolDown - Time.time) + 1);
         }
-
-        cooldownUI.text = string.Format("Wood Wall: {0}\nConcrete Wall: {1}\nBasic Turret: {2}\nMud: {3}\nAcid: {4}\nExplosive Mine: {5}",woodWallState,concreteWallState,basicTurretState,mudState,acidState,explosiveMineState);
+        if (utilCategory == 0)
+        {
+            cooldownUI.text = string.Format("Wood Wall: {0}\nConcrete Wall: {1}\nElectric Fence: {2}", woodWallState, concreteWallState,electricFenceState);
+        }
+        if(utilCategory == 1)
+        {
+            cooldownUI.text= string.Format("Basic Turret: {0}\nArmored Turret: {1}\nFrenzy Turret: {2}\nShotgun Turret: {3}\nSniper Turret: {4}", basicTurretState, armoredTurretState, frenzyTurretState, shotgunTurretState, sniperTurretState);
+        }
+        if(utilCategory == 2)
+        {
+            cooldownUI.text= string.Format("Mud: {0}\nAcid: {1}\nExplosive Mine: {2}", mudState, acidState, explosiveMineState);
+        }
     }
 }
