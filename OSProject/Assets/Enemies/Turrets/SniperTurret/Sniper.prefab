@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4304040815102382808}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -34.56961, y: 0.00000011920929, z: -17.420778}
+  m_LocalRotation: {x: -0, y: 0.2863605, z: -0, w: 0.95812196}
+  m_LocalPosition: {x: 23.794426, y: -4.73422e-17, z: 21.32103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3a9674c93e57e4a9e192dd5ebbaa1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   bulletSpawn: {fileID: 643905535777228820}
   bodyRotation: {fileID: 5997138257053267819}
   gun: {fileID: 2347508267085554432}

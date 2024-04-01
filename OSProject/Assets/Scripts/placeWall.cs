@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using FishNet.Object;
+using FishNet;
 
-public class placeWall : MonoBehaviour
+public class placeWall : NetworkBehaviour
 {
     [Header("Utility Objects")]
     public GameObject[] util;
@@ -108,6 +109,9 @@ public class placeWall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!base.IsOwner)
+            return;
+
         //converts mouse position to a world position through camera
         screenPosition = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
@@ -557,10 +561,10 @@ public class placeWall : MonoBehaviour
             //transform.Rotate(0.0f, 15.0f, 0.0f, Space.World);
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                selectedUtilUI.transform.Rotate(0.0f, rotationSpeed, 0.0f, Space.World);
+                selectedUtilUI.transform.Rotate(0.0f, rotationSpeed * Time.deltaTime * 100f, 0.0f, Space.World);
                 savedRotation += rotationSpeed;
             }
-            selectedUtilUI.transform.Rotate(0.0f, rotationSpeed, 0.0f, Space.World);
+            selectedUtilUI.transform.Rotate(0.0f, rotationSpeed * Time.deltaTime * 100f, 0.0f, Space.World);
             savedRotation += rotationSpeed;
 
         }
@@ -569,11 +573,11 @@ public class placeWall : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                selectedUtilUI.transform.Rotate(0.0f, -rotationSpeed, 0.0f, Space.World);
+                selectedUtilUI.transform.Rotate(0.0f, -rotationSpeed * Time.deltaTime * 100f, 0.0f, Space.World);
                 savedRotation -= rotationSpeed;
             }
             //transform.Rotate(0.0f, -15.0f, 0.0f, Space.World);
-            selectedUtilUI.transform.Rotate(0.0f, -rotationSpeed, 0.0f, Space.World);
+            selectedUtilUI.transform.Rotate(0.0f, -rotationSpeed * Time.deltaTime * 100f, 0.0f, Space.World);
             savedRotation -= rotationSpeed;
             
         }
@@ -587,7 +591,8 @@ public class placeWall : MonoBehaviour
                 firstWoodWallUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastWoodWallUse = Time.time;
 
             }
@@ -599,7 +604,8 @@ public class placeWall : MonoBehaviour
                 firstConcreteWallUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastConcreteWallUse = Time.time;
 
             }
@@ -611,7 +617,8 @@ public class placeWall : MonoBehaviour
                 firstElectricFenceUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastElectricFenceUse = Time.time;
 
             }
@@ -623,7 +630,8 @@ public class placeWall : MonoBehaviour
                 firstBasicTurretUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastBasicTurretUse = Time.time;
 
             }
@@ -635,7 +643,8 @@ public class placeWall : MonoBehaviour
                 firstArmoredTurretUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastArmoredTurretUse = Time.time;
 
             }
@@ -647,7 +656,8 @@ public class placeWall : MonoBehaviour
                 firstFrenzyTurretUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastFrenzyTurretUse = Time.time;
 
             }
@@ -659,7 +669,8 @@ public class placeWall : MonoBehaviour
                 firstShotgunTurretUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastShotgunTurretUse = Time.time;
 
             }
@@ -671,7 +682,8 @@ public class placeWall : MonoBehaviour
                 firstSniperTurretUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastSniperTurretUse = Time.time;
 
             }
@@ -683,7 +695,8 @@ public class placeWall : MonoBehaviour
                 firstMudUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastMudUse = Time.time;
 
             }
@@ -695,7 +708,8 @@ public class placeWall : MonoBehaviour
                 firstAcidUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastAcidUse = Time.time;
 
             }
@@ -707,7 +721,8 @@ public class placeWall : MonoBehaviour
                 firstExplosiveMineUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastExplosiveMineUse = Time.time;
 
             }
@@ -719,7 +734,8 @@ public class placeWall : MonoBehaviour
                 firstFlashMineUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastFlashMineUse = Time.time;
 
             }
@@ -731,7 +747,8 @@ public class placeWall : MonoBehaviour
                 firstAcidMineUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastAcidMineUse = Time.time;
 
             }
@@ -743,7 +760,8 @@ public class placeWall : MonoBehaviour
                 firstDecoyMineUse = false;
                 util[utilSlot].transform.position = worldPosition;
                 util[utilSlot].transform.rotation = selectedUtilUI.transform.rotation;
-                Instantiate(util[utilSlot]);
+                GameObject go = Instantiate(util[utilSlot]);
+                InstanceFinder.ServerManager.Spawn(go, null);
                 lastDecoyMineUse = Time.time;
 
             }

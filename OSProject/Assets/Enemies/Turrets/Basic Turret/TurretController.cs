@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using FishNet.Connection;
+using FishNet.Object;
+using FishNet;
 
-public class TurretController : MonoBehaviour, Damagable, Electronic
+public class TurretController : NetworkBehaviour, Damagable, Electronic
 {
 
     //Prefabs and tranforms
@@ -44,6 +47,9 @@ public class TurretController : MonoBehaviour, Damagable, Electronic
 
     void Update()
     {
+        if (!IsOwner)
+            return;
+
         if (disabled)
         {
             Deactivate(empDuration);
@@ -80,6 +86,7 @@ public class TurretController : MonoBehaviour, Damagable, Electronic
                 }
                 
                 TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                 StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
 
@@ -95,6 +102,7 @@ public class TurretController : MonoBehaviour, Damagable, Electronic
                 TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
 
                 StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 100, Vector3.zero, false));
+                InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                 lastShootTime = Time.time;
                 if (shotCount >= burstLimit)
@@ -172,6 +180,7 @@ public class TurretController : MonoBehaviour, Damagable, Electronic
     }
     private void Die()
     {
+        InstanceFinder.ServerManager.Despawn(gameObject);
         Destroy(gameObject);
     }
 

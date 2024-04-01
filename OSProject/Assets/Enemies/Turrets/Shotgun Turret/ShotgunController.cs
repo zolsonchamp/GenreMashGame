@@ -1,8 +1,12 @@
+using FishNet;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
+using FishNet.Connection;
+using FishNet.Object;
 
-public class ShotgunController : MonoBehaviour, Damagable, Electronic
+public class ShotgunController : NetworkBehaviour, Damagable, Electronic
 { //Prefabs and tranforms
     [SerializeField] Transform bulletSpawn;
     [SerializeField] Transform bodyRotation;
@@ -42,6 +46,9 @@ public class ShotgunController : MonoBehaviour, Damagable, Electronic
 
     void Update()
     {
+        if (!IsOwner)
+            return;
+
         if (disabled) { Deactivate(empDuration); }  
         GameObject targetObject = GameObject.FindGameObjectWithTag("Target");
         target = targetObject.transform;
@@ -78,6 +85,7 @@ public class ShotgunController : MonoBehaviour, Damagable, Electronic
                     }
 
                     TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                    InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                     StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
 
@@ -93,6 +101,7 @@ public class ShotgunController : MonoBehaviour, Damagable, Electronic
                     TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
 
                     StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 100, Vector3.zero, false));
+                    InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                     lastShootTime = Time.time;
                     if (shotCount >= burstLimit)
@@ -171,6 +180,7 @@ public class ShotgunController : MonoBehaviour, Damagable, Electronic
     }
     private void Die()
     {
+        InstanceFinder.ServerManager.Despawn(gameObject);
         Destroy(gameObject);
     }
 }
