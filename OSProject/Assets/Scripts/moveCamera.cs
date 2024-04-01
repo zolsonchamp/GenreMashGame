@@ -27,14 +27,14 @@ public class moveCamera : NetworkBehaviour
         base.OnStartClient();
         if (inUse)
         {
-            if (base.IsOwner)
+            if (IsOwner)
             {
                 Camera.main.transform.position = new Vector3(0, 150, 0);
                 Camera.main.transform.rotation = Quaternion.Euler(90, 0, 90);
             }
             else
             {
-                transform.GetChild(1).gameObject.SetActive(false);
+                //transform.GetChild(1).gameObject.SetActive(false);
                 //gameObject.GetComponent<PlayerController>().enabled = false;
             }
         }
@@ -44,14 +44,14 @@ public class moveCamera : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!base.IsOwner)
+        if (!IsOwner)
             return;
 
 
         //moves camera up
         if (Input.GetKey(KeyCode.W))
         {
-            Camera.main.transform.position= new Vector3(Camera.main.transform.position.x - cameraSpeedVert, Camera.main.transform.position.y,Camera.main.transform.position.z);
+            Camera.main.transform.position= new Vector3(Camera.main.transform.position.x - cameraSpeedVert * Time.deltaTime * 100, Camera.main.transform.position.y,Camera.main.transform.position.z);
             //restricts camera to map
             if (Camera.main.transform.position.x < cameraBoundsVert*-1)
             {
@@ -61,7 +61,7 @@ public class moveCamera : NetworkBehaviour
         //moves camera down
         if (Input.GetKey(KeyCode.S))
         {
-            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + cameraSpeedVert, Camera.main.transform.position.y, Camera.main.transform.position.z);
+            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + cameraSpeedVert * Time.deltaTime * 100, Camera.main.transform.position.y, Camera.main.transform.position.z);
             //restricts camera to map
             if (Camera.main.transform.position.x > cameraBoundsVert)
             {
@@ -71,7 +71,7 @@ public class moveCamera : NetworkBehaviour
         //moves camera left
         if (Input.GetKey(KeyCode.A))
         {
-            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z-cameraSpeedHoriz);
+            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z- cameraSpeedHoriz * Time.deltaTime * 100);
             //restricts camera to map
             if (Camera.main.transform.position.z < cameraBoundsHoriz*-1)
             {
@@ -81,7 +81,7 @@ public class moveCamera : NetworkBehaviour
         //moves camera right
         if (Input.GetKey(KeyCode.D))
         {
-            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z+cameraSpeedHoriz);
+            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z+ cameraSpeedHoriz * Time.deltaTime * 100);
             //restricts camera to map
             if (Camera.main.transform.position.z > cameraBoundsHoriz)
             {

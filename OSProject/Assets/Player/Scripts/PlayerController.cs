@@ -140,7 +140,7 @@ public class PlayerController : NetworkBehaviour, Damagable
         if (inUse)
         {
             
-            if (base.IsOwner)
+            if (IsOwner)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -161,7 +161,7 @@ public class PlayerController : NetworkBehaviour, Damagable
     void Update()
     {
 
-        if (!base.IsOwner)
+        if (!IsOwner)
             return;
         
         GroundCheck();
@@ -260,7 +260,7 @@ public class PlayerController : NetworkBehaviour, Damagable
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector3 moveDirection = (transform.forward * vertical + transform.right * horizontal).normalized;
-        float moveSpeed = (Input.GetKey(sprintKey) ? sprintSpeed : walkSpeed);
+        float moveSpeed = (Input.GetKey(sprintKey) ? sprintSpeed : walkSpeed) * Time.deltaTime * 200f;
         // Handle player movement
         if (isGrounded)
         {

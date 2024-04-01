@@ -82,7 +82,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 0
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 3110920872
+  _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 10652217406441312157
 --- !u!1001 &3213811495308595245
@@ -101,9 +101,21 @@ PrefabInstance:
       propertyPath: _componentIndexCache
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 128393528251229645, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1836841549509569119, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879835937476958650, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3771159740372347113, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: _scenePathHash
-      value: 3110920872
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3771159740372347113, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: <SceneId>k__BackingField
@@ -145,6 +157,10 @@ PrefabInstance:
       propertyPath: _componentIndexCache
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4739239095964116103, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6254930776074804070, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -185,13 +201,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6481992335403245815, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6739165986530188326, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: m_Name
       value: RTSPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 6739165986530188326, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7440283669638386090, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
       propertyPath: _componentIndexCache
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219254316552880428, guid: 98e2063e43e97604da198f3e6a66e3ee, type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -257,7 +285,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2422406241450845928, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
       propertyPath: _scenePathHash
-      value: 3110920872
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2422406241450845928, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
       propertyPath: <SceneId>k__BackingField
@@ -318,6 +346,10 @@ PrefabInstance:
     - target: {fileID: 8135153194875245096, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
       propertyPath: m_Name
       value: FPSPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8135153194875245096, guid: a61f5014efbaa7f438f45a926e73f2c0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
