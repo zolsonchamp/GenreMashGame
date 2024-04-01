@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
+using FishNet;
 
-public class objectiveManager : MonoBehaviour, Damagable
+public class objectiveManager : NetworkBehaviour, Damagable
 {
     public float maxHealth;
     public float currentHealth;
@@ -33,6 +35,7 @@ public class objectiveManager : MonoBehaviour, Damagable
     private void Die()
     {
         GameManager.Instance.objectiveCount--;
+        InstanceFinder.ServerManager.Despawn(gameObject);
         gameObject.SetActive(false);
     }
 }

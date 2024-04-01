@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5826230374395021395}
   - component: {fileID: 8463444704078834442}
   - component: {fileID: 6694563323815020663}
+  - component: {fileID: -8249787594250419841}
   m_Layer: 0
   m_Name: Frenzy
   m_TagString: Untagged
@@ -27,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3964880453578430270}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.245895, y: 0.00000011920929, z: -11.969963}
+  m_LocalRotation: {x: -0, y: 0.2863605, z: -0, w: 0.95812196}
+  m_LocalPosition: {x: 27.924013, y: -3.460753e-17, z: 15.585846}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -95,6 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5bf820870b005743bd5df050471eec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   bulletSpawn: {fileID: 4644262435914561137}
   bodyRotation: {fileID: 7868656193997479377}
   gun: {fileID: 3270802211852432498}
@@ -114,6 +118,51 @@ MonoBehaviour:
   disabled: 0
   empTimer: 0
   empDuration: 0
+--- !u!114 &-8249787594250419841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3964880453578430270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
+  _componentConfiguration: 0
+  _synchronizeParent: 0
+  _packing:
+    Position: 1
+    Rotation: 1
+    Scale: 0
+  _interpolation: 2
+  _extrapolation: 2
+  _enableTeleport: 0
+  _teleportThreshold: 1
+  _scaleThreshold: 1
+  _clientAuthoritative: 1
+  _sendToOwner: 1
+  _enableNetworkLod: 1
+  _interval: 1
+  _synchronizePosition: 1
+  _positionSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeRotation: 1
+  _rotationSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeScale: 1
+  _scaleSnapping:
+    X: 0
+    Y: 0
+    Z: 0
 --- !u!1 &6208500710270779300
 GameObject:
   m_ObjectHideFlags: 0

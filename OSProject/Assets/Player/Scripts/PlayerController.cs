@@ -4,8 +4,13 @@ using System.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using FishNet.Connection;
+using FishNet.Object;
+using FishNet.Example.ColliderRollbacks;
+using FishNet;
+using System.Globalization;
 
-public class PlayerController : MonoBehaviour, Damagable,Flash
+public class PlayerController : NetworkBehaviour, Damagable,Flash
 {
     [Header("Stats")]
     public float maxHealth;
@@ -126,6 +131,33 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
     [SerializeField]
     private Camera playerCam;
 
+    public bool inUse = false;
+
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if (inUse)
+        {
+
+            if (IsOwner)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                playerCam = Camera.main;
+                playerCam.transform.position = new Vector3(transform.position.x, transform.position.y + 1.75f, transform.position.z);
+                playerCam.transform.SetParent(transform);
+                transform.GetChild(2).parent = playerCam.transform;
+            }
+            else
+            {
+                transform.GetChild(1).gameObject.SetActive(false);
+                gameObject.GetComponent<PlayerController>().enabled = false;
+            }
+        }
+
+    }
+
     private void Awake()
     {
         //lastStimTime= Time.time+stimCooldown;
@@ -138,17 +170,19 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
         jumpKey = KeyCode.Space;
         shootButton = KeyCode.Mouse0;
         altShootButton = KeyCode.Mouse1;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
 
         currentHealth = maxHealth;
     }
 
     void Update()
     {
-     //   if (flashed)
-     //   {
-            var tempColor = flashScreen.color;
+
+        if (!IsOwner)
+            return;
+
+        //   if (flashed)
+        //   {
+        var tempColor = flashScreen.color;
         flashOpacity = tempColor.a;
             tempColor.a-=.001f;
         flashScreen.color = tempColor;
@@ -272,7 +306,7 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector3 moveDirection = (transform.forward * vertical + transform.right * horizontal).normalized;
-        float moveSpeed = (Input.GetKey(sprintKey) ? sprintSpeed : walkSpeed);
+        float moveSpeed = (Input.GetKey(sprintKey) ? sprintSpeed : walkSpeed) * Time.deltaTime * 100f;
         // Handle player movement
         if (isGrounded)
         {
@@ -357,6 +391,7 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
                     }
 
                     TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                    InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                     StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
 
@@ -365,6 +400,7 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
                 else
                 {
                     TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                    InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                     StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 100, Vector3.zero, false));
 
@@ -379,6 +415,7 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
                 nadeAmmoCount--;
                 Vector3 direction = GetAccurateDirection();
                 GameObject projectile = Instantiate(nade);
+                InstanceFinder.ServerManager.Spawn(projectile.gameObject, null);
                 projectile.transform.position = nadeSpawn.position;
                 projectile.GetComponent<Rigidbody>().AddForce(direction * nadeSpeed, ForceMode.Impulse);
 
@@ -391,6 +428,7 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
                 nadeAmmoCount--;
                 Vector3 direction = GetAccurateDirection();
                 GameObject projectile = Instantiate(emp);
+                InstanceFinder.ServerManager.Spawn(projectile.gameObject, null);
                 projectile.transform.position = nadeSpawn.position;
                 projectile.GetComponent<Rigidbody>().AddForce(direction * nadeSpeed, ForceMode.Impulse);
 
@@ -415,6 +453,7 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
                     }
 
                     TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                    InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                     StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
 
@@ -423,6 +462,7 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
                 else
                 {
                     TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                    InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                     StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 500, Vector3.zero, false));
 
@@ -453,6 +493,7 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
                         }
 
                         TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                        InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                         StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
 
@@ -461,6 +502,7 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
                     else
                     {
                         TrailRenderer trail = Instantiate(bulletTracer.GetComponent<TrailRenderer>(), bulletSpawn.position, Quaternion.identity);
+                        InstanceFinder.ServerManager.Spawn(trail.gameObject, null);
 
                         StartCoroutine(SpawnTrail(trail, bulletSpawn.position + direction * 100, Vector3.zero, false));
 
@@ -481,6 +523,7 @@ public class PlayerController : MonoBehaviour, Damagable,Flash
                     teslaAmmoCount--;
                     Vector3 direction = GetAccurateDirection();
                     GameObject projectile = Instantiate(teslaRound);
+                    InstanceFinder.ServerManager.Spawn(projectile.gameObject, null);
                     projectile.transform.position = nadeSpawn.position;
                     projectile.GetComponent<Rigidbody>().AddForce(direction * teslaSpeed, ForceMode.Impulse);
                     teslaChargeCounter = 0f;
