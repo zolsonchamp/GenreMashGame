@@ -47,8 +47,8 @@ public class TurretController : NetworkBehaviour, Damagable, Electronic
 
     void Update()
     {
-        if (!IsOwner)
-            return;
+        //if (!IsOwner)
+        //    return;
 
         if (disabled)
         {

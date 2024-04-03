@@ -198,7 +198,6 @@ public class PlayerController : NetworkBehaviour, Damagable,Flash
         AcidCheck();
         if (isAcid)
             gameObject.GetComponent<Damagable>()?.TakeDamage(.01f);
-        HandleLook();
         HandleMovement();
         Shoot();
         altShoot();
@@ -267,6 +266,11 @@ public class PlayerController : NetworkBehaviour, Damagable,Flash
             stimReady = string.Format("{0}", lastStimTime + stimCooldown - Time.time);
         }
         UpdateAmmoIndicator(weaponSlot);
+    }
+
+    private void FixedUpdate()
+    {
+        HandleLook();
     }
 
     void GroundCheck()

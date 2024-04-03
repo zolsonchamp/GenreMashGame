@@ -47,8 +47,8 @@ public class SniperController : NetworkBehaviour, Damagable, Electronic
 
     void Update()
     {
-        if (!IsOwner)
-            return;
+        //if (!IsOwner)
+        //    return;
 
         if (disabled) { Deactivate(empDuration); }  
         GameObject targetObject = GameObject.FindGameObjectWithTag("Target");

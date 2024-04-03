@@ -562,7 +562,7 @@ public class placeWall : NetworkBehaviour
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 selectedUtilUI.transform.Rotate(0.0f, rotationSpeed * Time.deltaTime * 100f, 0.0f, Space.World);
-                savedRotation += rotationSpeed;
+                savedRotation += rotationSpeed * 8;
             }
             selectedUtilUI.transform.Rotate(0.0f, rotationSpeed * Time.deltaTime * 100f, 0.0f, Space.World);
             savedRotation += rotationSpeed;
@@ -573,8 +573,8 @@ public class placeWall : NetworkBehaviour
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                selectedUtilUI.transform.Rotate(0.0f, -rotationSpeed * Time.deltaTime * 100f, 0.0f, Space.World);
-                savedRotation -= rotationSpeed;
+                selectedUtilUI.transform.Rotate(0.0f, -rotationSpeed * 2 * Time.deltaTime * 100f, 0.0f, Space.World);
+                savedRotation -= rotationSpeed * 8;
             }
             //transform.Rotate(0.0f, -15.0f, 0.0f, Space.World);
             selectedUtilUI.transform.Rotate(0.0f, -rotationSpeed * Time.deltaTime * 100f, 0.0f, Space.World);

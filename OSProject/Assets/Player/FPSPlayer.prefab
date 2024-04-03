@@ -599,7 +599,7 @@ MonoBehaviour:
   slowDuration: 1.5
   groundDrag: 5
   jumpHeight: 15
-  gravity: 1.5
+  gravity: 1.75
   mouseSensitivity: 2
   flameCone: {fileID: 6997235705394240630}
   nade: {fileID: 6243786565180192713, guid: 790e9952bff83cc4999b338034fc5ffb, type: 3}
@@ -616,7 +616,7 @@ MonoBehaviour:
   rifleDamage: 5
   revolverDamage: 50
   shotgunDamage: 6
-  shotgunKnockback: 5
+  shotgunKnockback: 2.5
   rifleAmmoCapacity: 36
   nadeAmmoCapacity: 8
   revolverAmmoCapacity: 6
