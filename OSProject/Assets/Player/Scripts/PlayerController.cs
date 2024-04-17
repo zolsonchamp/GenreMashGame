@@ -323,9 +323,15 @@ public class PlayerController : NetworkBehaviour, Damagable,Flash
             jumpMomentum = moveDirection;
         }
         else
-        {   
-            
-            rb.velocity = new Vector3((jumpMomentum.x+(moveDirection.x)/2) * jumpSpeed, rb.velocity.y, (jumpMomentum.z+(moveDirection.z/2)) * jumpSpeed);
+        {
+            gravity = 1.5f;
+            if (isMud)
+                rb.velocity = new Vector3((moveDirection.x * moveSpeed / 6) / slowModifier, rb.velocity.y, moveDirection.z * moveSpeed / 6 / slowModifier);
+            else
+                rb.velocity = new Vector3((moveDirection.x * moveSpeed / 2) / slowModifier, rb.velocity.y, moveDirection.z * moveSpeed / 2 / slowModifier);
+
+            jumpMomentum = moveDirection;
+            //rb.velocity = new Vector3((jumpMomentum.x+(moveDirection.x)/2) * jumpSpeed, rb.velocity.y, (jumpMomentum.z+(moveDirection.z/2)) * jumpSpeed);
         }
         
         //Jump
@@ -348,8 +354,6 @@ public class PlayerController : NetworkBehaviour, Damagable,Flash
             gravity += .003f;
         }
 
-        //Animation
-        //animator.SetFloat("PlayerMoveSpeed", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
     }
     public void removeSlow()
     {
